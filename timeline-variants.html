@@ -1,0 +1,872 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline Variants</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:   #0e1330;
+      --navy:  #1a2e73;
+      --navy-deep: #0b1a4a;
+      --orange:#e8912b;
+      --paper: #ffffff;
+      --paper-2:#f0f0f2;
+      --muted: #6b7280;
+      --line:  #e5e7eb;
+      --ease:  cubic-bezier(.22,1,.36,1);
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--paper-2);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Shared wrapper ── */
+    .variant {
+      padding: 80px 64px;
+      border-bottom: 1px solid var(--line);
+    }
+    .variant:last-child { border-bottom: none; }
+    .variant-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 56px;
+    }
+    .variant-num  { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
+    .variant-desc { font-size: 13px; color: var(--muted); }
+
+    .wrap { max-width: 1100px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 12px;
+    }
+    .section-heading {
+      font-size: clamp(26px, 3vw, 40px); font-weight: 700; letter-spacing: -.035em;
+      color: var(--navy); margin-bottom: 8px;
+    }
+    .section-sub {
+      font-size: 14px; line-height: 1.8; color: var(--muted); max-width: 480px;
+    }
+
+    button { font-family: inherit; cursor: pointer; }
+
+    /* ── Shared content animation (display:none variants only) ── */
+    @keyframes fadeSlideUp {
+      from { opacity:0; transform:translateY(12px); }
+      to   { opacity:1; transform:none; }
+    }
+
+    /* ── Auto-advance progress bar (shared) ── */
+    .auto-bar-wrap { margin-top:20px; height:2px; background:rgba(0,0,0,.08); border-radius:1px; overflow:hidden; }
+    .v6 .auto-bar-wrap { background:rgba(255,255,255,.1); }
+    .auto-bar { height:100%; background:var(--orange); width:0%; transition:none; border-radius:1px; }
+
+
+    /* ══════════════════════════════════════════════════════
+       V7  IMAGE + CONTENT split, auto-advance
+       ══════════════════════════════════════════════════════ */
+    .v7 { background: var(--ink); padding-bottom: 100px; }
+    .v7 .section-heading { color:#fff; }
+    .v7 .section-sub { color:rgba(255,255,255,.5); }
+
+    .v7 .tl-split {
+      display:grid; grid-template-columns:1.15fr 1fr;
+      margin-top:52px; min-height:460px; border-radius:4px; overflow:hidden;
+    }
+
+    /* Image side */
+    .v7 .img-side { position:relative; overflow:hidden; }
+    .v7 .img-slide { position:absolute; inset:0; opacity:0; transition:opacity .8s ease; }
+    .v7 .img-slide.active { opacity:1; }
+    .v7 .img-slide img { width:100%; height:100%; object-fit:cover; display:block; }
+    .v7 .img-slide::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(to right, transparent 60%, var(--ink) 100%);
+    }
+
+    /* Content side */
+    .v7 .content-side {
+      background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+      border-left:none; padding:44px 44px 36px;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+    .v7 .chap-area { position:relative; min-height:260px; }
+    .v7 .v7-chapter { position:absolute; top:0; left:0; right:0; opacity:0; transform:translateY(10px); pointer-events:none; transition:opacity .5s ease, transform .5s ease; }
+    .v7 .v7-chapter.active { opacity:1; transform:none; pointer-events:auto; }
+    .v7 .yr-tag  { font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--orange); margin-bottom:14px; display:block; }
+    .v7 .chap-title { font-size:clamp(18px,2vw,28px); font-weight:700; letter-spacing:-.03em; color:#fff; margin-bottom:14px; line-height:1.2; }
+    .v7 .chap-desc  { font-size:13px; line-height:1.85; color:rgba(255,255,255,.55); }
+
+    /* Year navigation dots */
+    .v7 .yr-nav { display:flex; flex-direction:column; gap:10px; margin-top:32px; }
+    .v7 .yr-nav-btn {
+      display:flex; align-items:center; gap:12px;
+      background:none; border:0; padding:8px 0; cursor:pointer;
+      border-top:1px solid rgba(255,255,255,.07);
+      transition:opacity .2s;
+    }
+    .v7 .yr-nav-btn:hover { opacity:.8; }
+    .v7 .yr-nav-btn .nd {
+      width:6px; height:6px; border-radius:50%;
+      background:rgba(255,255,255,.2); flex-shrink:0;
+      transition:background .3s, transform .3s;
+    }
+    .v7 .yr-nav-btn.active .nd { background:var(--orange); transform:scale(1.5); }
+    .v7 .yr-nav-btn .yr-lbl {
+      font-size:11px; font-weight:700; letter-spacing:.08em;
+      color:rgba(255,255,255,.35); transition:color .3s;
+    }
+    .v7 .yr-nav-btn.active .yr-lbl { color:#fff; }
+    .v7 .yr-nav-btn .yr-title-sm {
+      font-size:12px; color:rgba(255,255,255,.3); transition:color .3s;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px;
+    }
+    .v7 .yr-nav-btn.active .yr-title-sm { color:rgba(255,255,255,.7); }
+
+
+    /* ══════════════════════════════════════════════════════
+       V1  CURRENT: horizontal progress bar + year buttons
+       ══════════════════════════════════════════════════════ */
+    .v1 { background: var(--paper); }
+
+    .v1 .top-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .v1 .content-area { position: relative; min-height: 220px; margin-bottom: 40px; }
+    .v1 .chapter { position: absolute; top:0; left:0; right:0; opacity:0; transform:translateY(10px); pointer-events:none; transition: opacity .5s var(--ease), transform .5s var(--ease); }
+    .v1 .chapter.active { opacity:1; transform:none; pointer-events:auto; }
+    .v1 .yr-tag { font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:16px; display:block; }
+    .v1 .chap-title { font-size: clamp(24px,2.8vw,40px); font-weight:700; letter-spacing:-.035em; line-height:1.08; color:var(--navy); margin-bottom:16px; }
+    .v1 .chap-desc  { font-size:14px; line-height:1.88; color:var(--muted); max-width:560px; }
+
+    .v1 .tl-track { position:relative; height:14px; display:flex; align-items:center; margin-bottom:14px; }
+    .v1 .tl-line  { position:absolute; left:0; right:0; height:1px; background:var(--line); }
+    .v1 .tl-fill  { position:absolute; left:0; height:1px; background:var(--orange); width:0; transition:width .6s var(--ease); }
+    .v1 .tl-dot   { position:absolute; top:50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:50%; background:var(--orange); transition:left .6s var(--ease); z-index:2; }
+
+    .v1 .yr-btns  { display:flex; justify-content:space-between; }
+    .v1 .yr-btn   { font-size:10px; font-weight:600; letter-spacing:.08em; color:var(--muted); background:none; border:0; padding:0; transition:color .25s, transform .2s; }
+    .v1 .yr-btn:hover { color:var(--navy); transform:scale(1.15); }
+    .v1 .yr-btn.active { color:var(--ink); font-weight:700; }
+
+
+    /* ══════════════════════════════════════════════════════
+       V2  VERTICAL LEFT: stacked entries, dot on a left line
+       ══════════════════════════════════════════════════════ */
+    .v2 { background: var(--paper); }
+
+    .v2 .top-row { margin-bottom: 56px; }
+
+    .v2 .tl-list { position:relative; padding-left: 40px; }
+    .v2 .tl-list::before {
+      content:''; position:absolute; left:7px; top:6px; bottom:6px;
+      width:1px; background:var(--line);
+    }
+    .v2 .tl-item { position:relative; margin-bottom:44px; }
+    .v2 .tl-item:last-child { margin-bottom:0; }
+    .v2 .tl-dot-wrap {
+      position:absolute; left:-40px; top:4px;
+      width:16px; height:16px;
+    }
+    .v2 .tl-dot-wrap::before {
+      content:''; display:block; width:8px; height:8px;
+      border-radius:50%; background:var(--line);
+      margin:4px; transition:background .3s;
+    }
+    .v2 .tl-item.active .tl-dot-wrap::before { background:var(--orange); }
+    .v2 .tl-year {
+      font-size:10px; font-weight:700; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--orange); margin-bottom:6px;
+    }
+    .v2 .tl-title { font-size:18px; font-weight:700; letter-spacing:-.02em; color:var(--navy); margin-bottom:8px; }
+    .v2 .tl-desc  { font-size:13px; line-height:1.8; color:var(--muted); max-width:620px; }
+
+
+    /* ══════════════════════════════════════════════════════
+       V3  ALTERNATING: zigzag center-line timeline, dark bg
+       ══════════════════════════════════════════════════════ */
+    .v3 { background: var(--navy-deep); }
+    .v3 .section-heading { color:#fff; }
+    .v3 .section-sub { color:rgba(255,255,255,.55); }
+
+    .v3 .tl-center { position:relative; padding:0; margin-top:56px; }
+    .v3 .tl-center::before {
+      content:''; position:absolute; left:50%; transform:translateX(-50%);
+      top:0; bottom:0; width:1px; background:rgba(255,255,255,.1);
+    }
+    .v3 .tl-row {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:0 48px; margin-bottom:52px; position:relative;
+    }
+    .v3 .tl-row:last-child { margin-bottom:0; }
+
+    /* Dot on the center line */
+    .v3 .tl-row::before {
+      content:''; position:absolute; left:50%; top:6px;
+      transform:translateX(-50%);
+      width:10px; height:10px; border-radius:50%;
+      background:var(--orange); z-index:2;
+    }
+
+    /* Left-side content */
+    .v3 .tl-left  { text-align:right; padding-right:36px; }
+    .v3 .tl-right { padding-left:36px; }
+
+    /* Odd rows: content on left, empty right */
+    .v3 .tl-row.odd  .tl-left  { opacity:1; }
+    .v3 .tl-row.odd  .tl-right { opacity:0; pointer-events:none; }
+    /* Even rows: empty left, content on right */
+    .v3 .tl-row.even .tl-left  { opacity:0; pointer-events:none; }
+    .v3 .tl-row.even .tl-right { opacity:1; }
+
+    .v3 .tl-year  { font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:8px; }
+    .v3 .tl-title { font-size:17px; font-weight:700; letter-spacing:-.02em; color:#fff; margin-bottom:8px; line-height:1.25; }
+    .v3 .tl-desc  { font-size:13px; line-height:1.75; color:rgba(255,255,255,.5); }
+
+
+    /* ══════════════════════════════════════════════════════
+       V4  CARDS ROW: clickable year cards, content below
+       ══════════════════════════════════════════════════════ */
+    .v4 { background: var(--paper-2); }
+
+    .v4 .top-row { margin-bottom: 48px; }
+
+    .v4 .cards-row {
+      display:grid; grid-template-columns:repeat(7,1fr); gap:8px;
+      margin-bottom: 40px;
+    }
+    .v4 .yr-card {
+      background:#fff; border:1px solid var(--line); border-radius:4px;
+      padding:16px 10px; text-align:center; cursor:pointer;
+      transition:border-color .25s, box-shadow .25s, transform .25s;
+    }
+    .v4 .yr-card:hover { border-color:var(--navy); transform:translateY(-2px); }
+    .v4 .yr-card.active {
+      background:var(--navy); border-color:var(--navy);
+      box-shadow:0 4px 16px rgba(26,46,115,.25);
+      transform:translateY(-2px);
+    }
+    .v4 .yr-card .yr { font-size:11px; font-weight:700; letter-spacing:.06em; color:var(--muted); }
+    .v4 .yr-card.active .yr { color:rgba(255,255,255,.65); }
+    .v4 .yr-card .dot {
+      width:6px; height:6px; border-radius:50%; background:var(--line);
+      margin:8px auto 0;
+    }
+    .v4 .yr-card.active .dot { background:var(--orange); }
+
+    .v4 .content-panel {
+      background:#fff; border-radius:6px; border:1px solid var(--line);
+      padding:40px; min-height:160px;
+    }
+    .v4 .chapter { display:none; }
+    .v4 .chapter.active { display:block; }
+    .v4 .yr-tag { font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:14px; }
+    .v4 .chap-title { font-size:clamp(20px,2.4vw,32px); font-weight:700; letter-spacing:-.03em; color:var(--navy); margin-bottom:14px; }
+    .v4 .chap-desc  { font-size:14px; line-height:1.85; color:var(--muted); max-width:640px; }
+
+
+    /* ══════════════════════════════════════════════════════
+       V5  NUMBERED STEPS: large numbers, all visible
+       ══════════════════════════════════════════════════════ */
+    .v5 { background: var(--paper); }
+
+    .v5 .top-row { margin-bottom:56px; }
+
+    .v5 .steps { display:grid; grid-template-columns:repeat(7,1fr); gap:0; position:relative; }
+    .v5 .steps::before {
+      content:''; position:absolute; top:28px; left:20px; right:20px;
+      height:1px; background:var(--line); z-index:0;
+    }
+    .v5 .step { text-align:center; padding:0 8px; position:relative; z-index:1; }
+    .v5 .step-num {
+      width:56px; height:56px; border-radius:50%;
+      border:1px solid var(--line); background:#fff;
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 16px;
+      font-size:13px; font-weight:700; color:var(--muted);
+      transition:background .3s, border-color .3s, color .3s;
+      cursor:pointer;
+    }
+    .v5 .step:hover .step-num,
+    .v5 .step.active .step-num {
+      background:var(--orange); border-color:var(--orange); color:#fff;
+    }
+    .v5 .step-year { font-size:10px; font-weight:700; letter-spacing:.1em; color:var(--muted); margin-bottom:10px; }
+    .v5 .step-title { font-size:12px; font-weight:600; color:var(--navy); line-height:1.35; }
+
+    .v5 .step-panel {
+      margin-top: 48px; padding:36px 40px;
+      border-left:3px solid var(--orange);
+      background:#fdf8f3;
+    }
+    .v5 .panel-year  { font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:10px; }
+    .v5 .panel-title { font-size:clamp(20px,2.2vw,30px); font-weight:700; letter-spacing:-.03em; color:var(--navy); margin-bottom:12px; }
+    .v5 .panel-desc  { font-size:14px; line-height:1.85; color:var(--muted); }
+    .v5 .panel-entry { display:none; }
+    .v5 .panel-entry.active { display:block; animation: fadeSlideUp .4s cubic-bezier(.22,1,.36,1) both; }
+
+
+    /* ══════════════════════════════════════════════════════
+       V6  DOTS ON LINE: large interactive dots, pop-up card
+       ══════════════════════════════════════════════════════ */
+    .v6 { background: var(--navy-deep); }
+    .v6 .section-heading { color:#fff; }
+    .v6 .section-sub { color:rgba(255,255,255,.5); }
+
+    .v6 .tl-area { margin-top:56px; position:relative; }
+
+    /* Big horizontal line */
+    .v6 .line-wrap { position:relative; height:4px; background:rgba(255,255,255,.08); margin-bottom:0; }
+    .v6 .line-fill { position:absolute; left:0; top:0; height:4px; background:var(--orange); width:0; transition:width .55s var(--ease); border-radius:2px; }
+
+    /* Dot row */
+    .v6 .dot-row { display:flex; justify-content:space-between; margin-top:-14px; padding:0 0; }
+    .v6 .tl-dot-btn {
+      display:flex; flex-direction:column; align-items:center; gap:14px;
+      background:none; border:0; padding:0; cursor:pointer;
+    }
+    .v6 .dot-circle {
+      width:28px; height:28px; border-radius:50%;
+      background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.2);
+      transition:background .3s, border-color .3s, transform .3s;
+    }
+    .v6 .tl-dot-btn:hover .dot-circle,
+    .v6 .tl-dot-btn.active .dot-circle {
+      background:var(--orange); border-color:var(--orange);
+      transform:scale(1.25);
+    }
+    .v6 .dot-label { font-size:10px; font-weight:700; letter-spacing:.1em; color:rgba(255,255,255,.4); transition:color .3s; }
+    .v6 .tl-dot-btn.active .dot-label { color:rgba(255,255,255,.9); }
+
+    /* Content card */
+    .v6 .content-card {
+      margin-top:40px; background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1); border-radius:4px;
+      padding:40px; min-height:140px;
+    }
+    .v6 .chapter { display:none; }
+    .v6 .chapter.active { display:block; animation: fadeSlideUp .4s cubic-bezier(.22,1,.36,1) both; }
+    .v6 .yr-tag   { font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:12px; }
+    .v6 .chap-title { font-size:clamp(20px,2.4vw,32px); font-weight:700; letter-spacing:-.035em; color:#fff; margin-bottom:12px; }
+    .v6 .chap-desc  { font-size:14px; line-height:1.85; color:rgba(255,255,255,.55); max-width:640px; }
+
+  </style>
+</head>
+<body>
+
+
+  <!-- ═══════════════════════════════════════════════
+       V1  CURRENT STYLE
+       ═══════════════════════════════════════════════ -->
+  <div class="variant v1">
+    <div class="wrap">
+      <div class="variant-meta">
+        <span class="variant-num">Variant 01</span>
+        <span class="variant-desc">Current style  horizontal progress bar, year buttons</span>
+      </div>
+
+      <div class="top-row">
+        <div>
+          <p class="section-eyebrow">Journey</p>
+          <h2 class="section-heading">A Journey of Growth</h2>
+        </div>
+        <p class="section-sub">From founding vision to multi-entity sovereign infrastructure company  built on conviction, purpose, and scale.</p>
+      </div>
+
+      <div class="v1 content-area" id="v1chapters">
+        <div class="chapter active"><span class="yr-tag">2021</span><h3 class="chap-title">Unitey Founded</h3><p class="chap-desc">Unitey was founded by payment industry veterans with a vision to build inclusive, interoperable, and sovereign financial ecosystems.</p></div>
+        <div class="chapter"><span class="yr-tag">2022</span><h3 class="chap-title">Acquisition of Mercury</h3><p class="chap-desc">Together with Discover Financial Services and Hard Yaka, Unitey acquired Mercury  a leading UAE payment network with more than 400,000 customers and global acceptance.</p></div>
+        <div class="chapter"><span class="yr-tag">2023</span><h3 class="chap-title">Sovereign Infrastructure Role Expands</h3><p class="chap-desc">Mercury expanded its role by supporting governments in building and operating sovereign financial infrastructure.</p></div>
+        <div class="chapter"><span class="yr-tag">2024</span><h3 class="chap-title">Retail Payment Services License &amp; Shukria Launch</h3><p class="chap-desc">Mercury was awarded the Retail Payment Services License by the Central Bank of the UAE and launched Shukria to strengthen merchant services.</p></div>
+        <div class="chapter"><span class="yr-tag">2025</span><h3 class="chap-title">MPS Global &amp; PAPSSCARD</h3><p class="chap-desc">MPS Global was incorporated to scale its Scheme in a Box model across the Middle East and Africa. In partnership with Afreximbank, it launched PAPSSCARD, a pan-African card scheme.</p></div>
+        <div class="chapter"><span class="yr-tag">2025</span><h3 class="chap-title">Unitey Business Services Established</h3><p class="chap-desc">Unitey Business Services was established as a joint venture with the Central Bank of the UAE to support the nation's Financial Infrastructure Transformation programme.</p></div>
+        <div class="chapter"><span class="yr-tag">2026</span><h3 class="chap-title">Continued Expansion</h3><p class="chap-desc">Expands the ecosystem with new regional offices, deeper merchant services, and additional central bank partnerships across the Middle East and Africa.</p></div>
+      </div>
+
+      <div class="v1">
+        <div class="tl-track">
+          <div class="tl-line"></div>
+          <div class="tl-fill" id="v1fill"></div>
+          <div class="tl-dot"  id="v1dot"></div>
+        </div>
+        <div class="yr-btns" id="v1btns">
+          <button class="yr-btn active" data-i="0">2021</button>
+          <button class="yr-btn" data-i="1">2022</button>
+          <button class="yr-btn" data-i="2">2023</button>
+          <button class="yr-btn" data-i="3">2024</button>
+          <button class="yr-btn" data-i="4">2025</button>
+          <button class="yr-btn" data-i="5">2025·B</button>
+          <button class="yr-btn" data-i="6">2026</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       V2  VERTICAL LEFT TIMELINE
+       ═══════════════════════════════════════════════ -->
+  <div class="variant v2">
+    <div class="wrap">
+      <div class="variant-meta">
+        <span class="variant-num">Variant 02</span>
+        <span class="variant-desc">Vertical left timeline  all entries always visible</span>
+      </div>
+      <div class="top-row">
+        <p class="section-eyebrow">Journey</p>
+        <h2 class="section-heading" style="margin-bottom:0">A Journey of Growth</h2>
+      </div>
+
+      <div class="tl-list" style="margin-top:40px">
+
+        <div class="tl-item active">
+          <div class="tl-dot-wrap"></div>
+          <div class="tl-year">2021</div>
+          <div class="tl-title">Unitey Founded</div>
+          <div class="tl-desc">Unitey was founded by payment industry veterans with a vision to build inclusive, interoperable, and sovereign financial ecosystems.</div>
+        </div>
+
+        <div class="tl-item active">
+          <div class="tl-dot-wrap"></div>
+          <div class="tl-year">2022</div>
+          <div class="tl-title">Acquisition of Mercury</div>
+          <div class="tl-desc">Together with Discover Financial Services and Hard Yaka, Unitey acquired Mercury  a leading UAE payment network with more than 400,000 customers and global acceptance.</div>
+        </div>
+
+        <div class="tl-item active">
+          <div class="tl-dot-wrap"></div>
+          <div class="tl-year">2023</div>
+          <div class="tl-title">Sovereign Infrastructure Role Expands</div>
+          <div class="tl-desc">Mercury expanded its role by supporting governments in building and operating sovereign financial infrastructure.</div>
+        </div>
+
+        <div class="tl-item active">
+          <div class="tl-dot-wrap"></div>
+          <div class="tl-year">2024</div>
+          <div class="tl-title">Retail Payment Services License &amp; Shukria Launch</div>
+          <div class="tl-desc">Mercury was awarded the Retail Payment Services License by the Central Bank of the UAE and launched Shukria to strengthen merchant services.</div>
+        </div>
+
+        <div class="tl-item active">
+          <div class="tl-dot-wrap"></div>
+          <div class="tl-year">2025</div>
+          <div class="tl-title">MPS Global &amp; PAPSSCARD</div>
+          <div class="tl-desc">MPS Global was incorporated to scale its Scheme in a Box model across the Middle East and Africa. In partnership with Afreximbank, it launched PAPSSCARD, a pan-African card scheme.</div>
+        </div>
+
+        <div class="tl-item active">
+          <div class="tl-dot-wrap"></div>
+          <div class="tl-year">2025</div>
+          <div class="tl-title">Unitey Business Services Established</div>
+          <div class="tl-desc">Unitey Business Services was established as a joint venture with the Central Bank of the UAE to support the nation's Financial Infrastructure Transformation programme.</div>
+        </div>
+
+        <div class="tl-item active">
+          <div class="tl-dot-wrap"></div>
+          <div class="tl-year">2026</div>
+          <div class="tl-title">Continued Expansion</div>
+          <div class="tl-desc">Expands the ecosystem with new regional offices, deeper merchant services, and additional central bank partnerships across the Middle East and Africa.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       V3  ALTERNATING ZIGZAG (dark)
+       ═══════════════════════════════════════════════ -->
+  <div class="variant v3">
+    <div class="wrap">
+      <div class="variant-meta">
+        <span class="variant-num">Variant 03</span>
+        <span class="variant-desc" style="color:rgba(255,255,255,.4)">Alternating zigzag  center line, dark background</span>
+      </div>
+      <p class="section-eyebrow">Journey</p>
+      <h2 class="section-heading">A Journey of Growth</h2>
+      <p class="section-sub" style="margin-top:8px">From founding vision to multi-entity sovereign infrastructure company.</p>
+
+      <div class="tl-center">
+
+        <div class="tl-row odd">
+          <div class="tl-left">
+            <div class="tl-year">2021</div>
+            <div class="tl-title">Unitey Founded</div>
+            <div class="tl-desc">Unitey was founded by payment industry veterans with a vision to build inclusive, interoperable, and sovereign financial ecosystems.</div>
+          </div>
+          <div class="tl-right"></div>
+        </div>
+
+        <div class="tl-row even">
+          <div class="tl-left"></div>
+          <div class="tl-right">
+            <div class="tl-year">2022</div>
+            <div class="tl-title">Acquisition of Mercury</div>
+            <div class="tl-desc">Together with Discover Financial Services and Hard Yaka, Unitey acquired Mercury  a leading UAE payment network with more than 400,000 customers and global acceptance.</div>
+          </div>
+        </div>
+
+        <div class="tl-row odd">
+          <div class="tl-left">
+            <div class="tl-year">2023</div>
+            <div class="tl-title">Sovereign Infrastructure Role Expands</div>
+            <div class="tl-desc">Mercury expanded its role by supporting governments in building and operating sovereign financial infrastructure.</div>
+          </div>
+          <div class="tl-right"></div>
+        </div>
+
+        <div class="tl-row even">
+          <div class="tl-left"></div>
+          <div class="tl-right">
+            <div class="tl-year">2024</div>
+            <div class="tl-title">Retail Payment Services License &amp; Shukria Launch</div>
+            <div class="tl-desc">Mercury was awarded the Retail Payment Services License by the Central Bank of the UAE and launched Shukria to strengthen merchant services.</div>
+          </div>
+        </div>
+
+        <div class="tl-row odd">
+          <div class="tl-left">
+            <div class="tl-year">2025</div>
+            <div class="tl-title">MPS Global &amp; PAPSSCARD</div>
+            <div class="tl-desc">MPS Global was incorporated to scale its Scheme in a Box model across the Middle East and Africa. In partnership with Afreximbank, it launched PAPSSCARD.</div>
+          </div>
+          <div class="tl-right"></div>
+        </div>
+
+        <div class="tl-row even">
+          <div class="tl-left"></div>
+          <div class="tl-right">
+            <div class="tl-year">2025</div>
+            <div class="tl-title">Unitey Business Services Established</div>
+            <div class="tl-desc">Established as a joint venture with the Central Bank of the UAE to support the nation's Financial Infrastructure Transformation programme.</div>
+          </div>
+        </div>
+
+        <div class="tl-row odd">
+          <div class="tl-left">
+            <div class="tl-year">2026</div>
+            <div class="tl-title">Continued Expansion</div>
+            <div class="tl-desc">Expands the ecosystem with new regional offices, deeper merchant services, and additional central bank partnerships across the Middle East and Africa.</div>
+          </div>
+          <div class="tl-right"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       V5  NUMBERED STEPS
+       ═══════════════════════════════════════════════ -->
+  <div class="variant v5">
+    <div class="wrap">
+      <div class="variant-meta">
+        <span class="variant-num">Variant 05</span>
+        <span class="variant-desc">Numbered steps  click to expand detail panel</span>
+      </div>
+      <div class="top-row">
+        <p class="section-eyebrow">Journey</p>
+        <h2 class="section-heading" style="margin-bottom:0">A Journey of Growth</h2>
+      </div>
+
+      <div class="steps" id="v5steps">
+        <div class="step active" data-i="0">
+          <div class="step-num">01</div>
+          <div class="step-year">2021</div>
+          <div class="step-title">Unitey Founded</div>
+        </div>
+        <div class="step" data-i="1">
+          <div class="step-num">02</div>
+          <div class="step-year">2022</div>
+          <div class="step-title">Mercury Acquisition</div>
+        </div>
+        <div class="step" data-i="2">
+          <div class="step-num">03</div>
+          <div class="step-year">2023</div>
+          <div class="step-title">Infrastructure Expands</div>
+        </div>
+        <div class="step" data-i="3">
+          <div class="step-num">04</div>
+          <div class="step-year">2024</div>
+          <div class="step-title">License &amp; Shukria</div>
+        </div>
+        <div class="step" data-i="4">
+          <div class="step-num">05</div>
+          <div class="step-year">2025</div>
+          <div class="step-title">MPS &amp; PAPSSCARD</div>
+        </div>
+        <div class="step" data-i="5">
+          <div class="step-num">06</div>
+          <div class="step-year">2025</div>
+          <div class="step-title">UBS Established</div>
+        </div>
+        <div class="step" data-i="6">
+          <div class="step-num">07</div>
+          <div class="step-year">2026</div>
+          <div class="step-title">Expansion</div>
+        </div>
+      </div>
+
+      <div class="auto-bar-wrap" style="margin-top:32px"><div class="auto-bar"></div></div>
+      <div class="step-panel">
+        <div class="panel-entry active"><div class="panel-year">2021</div><div class="panel-title">Unitey Founded</div><div class="panel-desc">Unitey was founded by payment industry veterans with a vision to build inclusive, interoperable, and sovereign financial ecosystems.</div></div>
+        <div class="panel-entry"><div class="panel-year">2022</div><div class="panel-title">Acquisition of Mercury</div><div class="panel-desc">Together with Discover Financial Services and Hard Yaka, Unitey acquired Mercury  a leading UAE payment network with more than 400,000 customers and global acceptance.</div></div>
+        <div class="panel-entry"><div class="panel-year">2023</div><div class="panel-title">Sovereign Infrastructure Role Expands</div><div class="panel-desc">Mercury expanded its role by supporting governments in building and operating sovereign financial infrastructure.</div></div>
+        <div class="panel-entry"><div class="panel-year">2024</div><div class="panel-title">Retail Payment Services License &amp; Shukria Launch</div><div class="panel-desc">Mercury was awarded the Retail Payment Services License by the Central Bank of the UAE and launched Shukria to strengthen merchant services.</div></div>
+        <div class="panel-entry"><div class="panel-year">2025</div><div class="panel-title">MPS Global &amp; PAPSSCARD</div><div class="panel-desc">MPS Global was incorporated to scale its Scheme in a Box model across the Middle East and Africa. In partnership with Afreximbank, it launched PAPSSCARD, a pan-African card scheme.</div></div>
+        <div class="panel-entry"><div class="panel-year">2025</div><div class="panel-title">Unitey Business Services Established</div><div class="panel-desc">Unitey Business Services was established as a joint venture with the Central Bank of the UAE to support the nation's Financial Infrastructure Transformation programme.</div></div>
+        <div class="panel-entry"><div class="panel-year">2026</div><div class="panel-title">Continued Expansion</div><div class="panel-desc">Expands the ecosystem with new regional offices, deeper merchant services, and additional central bank partnerships across the Middle East and Africa.</div></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       V6  BIG DOTS ON LINE (dark)
+       ═══════════════════════════════════════════════ -->
+  <div class="variant v6">
+    <div class="wrap">
+      <div class="variant-meta">
+        <span class="variant-num">Variant 06</span>
+        <span class="variant-desc" style="color:rgba(255,255,255,.4)">Large interactive dots  orange fill line, dark card below</span>
+      </div>
+      <p class="section-eyebrow">Journey</p>
+      <h2 class="section-heading">A Journey of Growth</h2>
+      <p class="section-sub" style="margin-top:8px">From founding vision to multi-entity sovereign infrastructure company.</p>
+
+      <div class="tl-area">
+        <div class="line-wrap">
+          <div class="line-fill" id="v6fill"></div>
+        </div>
+        <div class="dot-row" id="v6dots">
+          <button class="tl-dot-btn active" data-i="0"><div class="dot-circle"></div><div class="dot-label">2021</div></button>
+          <button class="tl-dot-btn" data-i="1"><div class="dot-circle"></div><div class="dot-label">2022</div></button>
+          <button class="tl-dot-btn" data-i="2"><div class="dot-circle"></div><div class="dot-label">2023</div></button>
+          <button class="tl-dot-btn" data-i="3"><div class="dot-circle"></div><div class="dot-label">2024</div></button>
+          <button class="tl-dot-btn" data-i="4"><div class="dot-circle"></div><div class="dot-label">2025</div></button>
+          <button class="tl-dot-btn" data-i="5"><div class="dot-circle"></div><div class="dot-label">2025·B</div></button>
+          <button class="tl-dot-btn" data-i="6"><div class="dot-circle"></div><div class="dot-label">2026</div></button>
+        </div>
+
+        <div class="auto-bar-wrap" style="margin-top:24px"><div class="auto-bar"></div></div>
+        <div class="content-card">
+          <div class="chapter active"><span class="yr-tag">2021</span><h3 class="chap-title">Unitey Founded</h3><p class="chap-desc">Unitey was founded by payment industry veterans with a vision to build inclusive, interoperable, and sovereign financial ecosystems.</p></div>
+          <div class="chapter"><span class="yr-tag">2022</span><h3 class="chap-title">Acquisition of Mercury</h3><p class="chap-desc">Together with Discover Financial Services and Hard Yaka, Unitey acquired Mercury  a leading UAE payment network with more than 400,000 customers and global acceptance.</p></div>
+          <div class="chapter"><span class="yr-tag">2023</span><h3 class="chap-title">Sovereign Infrastructure Role Expands</h3><p class="chap-desc">Mercury expanded its role by supporting governments in building and operating sovereign financial infrastructure.</p></div>
+          <div class="chapter"><span class="yr-tag">2024</span><h3 class="chap-title">Retail Payment Services License &amp; Shukria Launch</h3><p class="chap-desc">Mercury was awarded the Retail Payment Services License by the Central Bank of the UAE and launched Shukria to strengthen merchant services.</p></div>
+          <div class="chapter"><span class="yr-tag">2025</span><h3 class="chap-title">MPS Global &amp; PAPSSCARD</h3><p class="chap-desc">MPS Global was incorporated to scale its Scheme in a Box model across the Middle East and Africa. In partnership with Afreximbank, it launched PAPSSCARD, a pan-African card scheme.</p></div>
+          <div class="chapter"><span class="yr-tag">2025</span><h3 class="chap-title">Unitey Business Services Established</h3><p class="chap-desc">Unitey Business Services was established as a joint venture with the Central Bank of the UAE to support the nation's Financial Infrastructure Transformation programme.</p></div>
+          <div class="chapter"><span class="yr-tag">2026</span><h3 class="chap-title">Continued Expansion</h3><p class="chap-desc">Expands the ecosystem with new regional offices, deeper merchant services, and additional central bank partnerships across the Middle East and Africa.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       V7  IMAGE + CONTENT split, auto-advance
+       ═══════════════════════════════════════════════ -->
+  <div class="variant v7">
+    <div class="wrap">
+      <div class="variant-meta">
+        <span class="variant-num">Variant 07</span>
+        <span class="variant-desc" style="color:rgba(255,255,255,.4)">Split image + content  auto-advance with crossfade</span>
+      </div>
+      <p class="section-eyebrow">Journey</p>
+      <h2 class="section-heading">A Journey of Growth</h2>
+      <p class="section-sub" style="margin-top:8px">From founding vision to multi-entity sovereign infrastructure company.</p>
+
+      <div class="tl-split">
+
+        <!-- Image side -->
+        <div class="img-side">
+          <div class="img-slide active"><img referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=75" alt="2021"></div>
+          <div class="img-slide"><img referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=75" alt="2022"></div>
+          <div class="img-slide"><img referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=75" alt="2023"></div>
+          <div class="img-slide"><img referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=75" alt="2024"></div>
+          <div class="img-slide"><img referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=75" alt="2025a"></div>
+          <div class="img-slide"><img referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=75" alt="2025b"></div>
+          <div class="img-slide"><img referrerpolicy="no-referrer" src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=75" alt="2026"></div>
+        </div>
+
+        <!-- Content side -->
+        <div class="content-side">
+          <div class="chap-area">
+            <div class="v7-chapter active"><span class="yr-tag">2021</span><h3 class="chap-title">Unitey Founded</h3><p class="chap-desc">Unitey was founded by payment industry veterans with a vision to build inclusive, interoperable, and sovereign financial ecosystems.</p></div>
+            <div class="v7-chapter"><span class="yr-tag">2022</span><h3 class="chap-title">Acquisition of Mercury</h3><p class="chap-desc">Together with Discover Financial Services and Hard Yaka, Unitey acquired Mercury  a leading UAE payment network with more than 400,000 customers and global acceptance.</p></div>
+            <div class="v7-chapter"><span class="yr-tag">2023</span><h3 class="chap-title">Sovereign Infrastructure Role Expands</h3><p class="chap-desc">Mercury expanded its role by supporting governments in building and operating sovereign financial infrastructure.</p></div>
+            <div class="v7-chapter"><span class="yr-tag">2024</span><h3 class="chap-title">Retail Payment Services License &amp; Shukria Launch</h3><p class="chap-desc">Mercury was awarded the Retail Payment Services License by the Central Bank of the UAE and launched Shukria to strengthen merchant services.</p></div>
+            <div class="v7-chapter"><span class="yr-tag">2025</span><h3 class="chap-title">MPS Global &amp; PAPSSCARD</h3><p class="chap-desc">MPS Global was incorporated to scale its Scheme in a Box model across the Middle East and Africa. In partnership with Afreximbank, it launched PAPSSCARD.</p></div>
+            <div class="v7-chapter"><span class="yr-tag">2025</span><h3 class="chap-title">Unitey Business Services Established</h3><p class="chap-desc">Established as a joint venture with the Central Bank of the UAE to support the nation's Financial Infrastructure Transformation programme.</p></div>
+            <div class="v7-chapter"><span class="yr-tag">2026</span><h3 class="chap-title">Continued Expansion</h3><p class="chap-desc">Expands the ecosystem with new regional offices, deeper merchant services, and additional central bank partnerships across the Middle East and Africa.</p></div>
+          </div>
+
+          <div class="yr-nav">
+            <button class="yr-nav-btn active" data-i="0"><span class="nd"></span><span class="yr-lbl">2021</span><span class="yr-title-sm">Unitey Founded</span></button>
+            <button class="yr-nav-btn" data-i="1"><span class="nd"></span><span class="yr-lbl">2022</span><span class="yr-title-sm">Acquisition of Mercury</span></button>
+            <button class="yr-nav-btn" data-i="2"><span class="nd"></span><span class="yr-lbl">2023</span><span class="yr-title-sm">Infrastructure Expands</span></button>
+            <button class="yr-nav-btn" data-i="3"><span class="nd"></span><span class="yr-lbl">2024</span><span class="yr-title-sm">License &amp; Shukria</span></button>
+            <button class="yr-nav-btn" data-i="4"><span class="nd"></span><span class="yr-lbl">2025</span><span class="yr-title-sm">MPS &amp; PAPSSCARD</span></button>
+            <button class="yr-nav-btn" data-i="5"><span class="nd"></span><span class="yr-lbl">2025·B</span><span class="yr-title-sm">UBS Established</span></button>
+            <button class="yr-nav-btn" data-i="6"><span class="nd"></span><span class="yr-lbl">2026</span><span class="yr-title-sm">Continued Expansion</span></button>
+          </div>
+          <div class="auto-bar-wrap" style="margin-top:16px"><div class="auto-bar"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const TOTAL = 7;
+    const INTERVAL = 3800;
+
+    /* Toggle active class across a list */
+    function activate(items, i) {
+      items.forEach((el, idx) => el.classList.toggle('active', idx === i));
+    }
+
+    /* Animate the orange progress bar */
+    function runBar(barEl, dur) {
+      barEl.style.transition = 'none';
+      barEl.style.width = '0%';
+      void barEl.offsetWidth;
+      barEl.style.transition = 'width ' + dur + 'ms linear';
+      barEl.style.width = '100%';
+    }
+
+    /*
+      makeAutoVariant  wires up a variant with:
+      • click handlers on controls
+      • IntersectionObserver to start/stop based on scroll visibility
+      • mouseenter/mouseleave pause
+    */
+    function makeAutoVariant(root, controls, goFn, getCur) {
+      let timer = null;
+      let visible = false;
+      let paused  = false;
+
+      function start() {
+        if (timer) return;
+        timer = setInterval(() => goFn((getCur() + 1) % TOTAL), INTERVAL);
+      }
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+      }
+
+      // Pause on hover
+      root.addEventListener('mouseenter', () => { paused = true;  stop(); });
+      root.addEventListener('mouseleave', () => { paused = false; if (visible) start(); });
+
+      // Manual click  restart timer
+      controls.forEach(el => el.addEventListener('click', () => {
+        stop();
+        goFn(+el.dataset.i);
+        if (visible && !paused) start();
+      }));
+
+      // Only run when at least 30% is in the viewport
+      const io = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !paused) start();
+        else stop();
+      }, { threshold: 0.3 });
+      io.observe(root);
+    }
+
+    /* ════ V1  manual only ════ */
+    (function () {
+      const btns  = [...document.querySelectorAll('#v1btns .yr-btn')];
+      const chaps = [...document.querySelectorAll('#v1chapters .chapter')];
+      const fill  = document.getElementById('v1fill');
+      const dot   = document.getElementById('v1dot');
+      let cur = 0;
+
+      function go(i) {
+        cur = i;
+        activate(btns, cur);
+        activate(chaps, cur);
+        const pct = cur / (TOTAL - 1) * 100;
+        fill.style.width = pct + '%';
+        dot.style.left   = pct + '%';
+      }
+
+      btns.forEach(b => b.addEventListener('click', () => go(+b.dataset.i)));
+      go(0);
+    })();
+
+    /* ════ V5  auto ════ */
+    (function () {
+      const root    = document.querySelector('.v5');
+      const steps   = [...document.querySelectorAll('#v5steps .step')];
+      const entries = [...document.querySelectorAll('.v5 .panel-entry')];
+      const bar     = root.querySelector('.auto-bar');
+      let cur = 0;
+
+      function go(i) {
+        cur = ((i % TOTAL) + TOTAL) % TOTAL;
+        activate(steps, cur);
+        activate(entries, cur);
+        runBar(bar, INTERVAL);
+      }
+
+      makeAutoVariant(root, steps, go, () => cur);
+      go(0);
+    })();
+
+    /* ════ V6  auto ════ */
+    (function () {
+      const root  = document.querySelector('.v6');
+      const dots  = [...document.querySelectorAll('#v6dots .tl-dot-btn')];
+      const chaps = [...document.querySelectorAll('.v6 .content-card .chapter')];
+      const fill  = document.getElementById('v6fill');
+      const bar   = root.querySelector('.auto-bar');
+      let cur = 0;
+
+      function go(i) {
+        cur = ((i % TOTAL) + TOTAL) % TOTAL;
+        activate(dots, cur);
+        activate(chaps, cur);
+        fill.style.width = (cur / (TOTAL - 1) * 100) + '%';
+        runBar(bar, INTERVAL);
+      }
+
+      makeAutoVariant(root, dots, go, () => cur);
+      go(0);
+    })();
+
+    /* ════ V7  auto with images ════ */
+    (function () {
+      const root    = document.querySelector('.v7');
+      if (!root) return;
+      const imgs    = [...root.querySelectorAll('.img-slide')];
+      const chaps   = [...root.querySelectorAll('.v7-chapter')];
+      const navBtns = [...root.querySelectorAll('.yr-nav-btn')];
+      const bar     = root.querySelector('.auto-bar');
+      let cur = 0;
+
+      function go(i) {
+        cur = ((i % TOTAL) + TOTAL) % TOTAL;
+        activate(imgs, cur);
+        activate(chaps, cur);
+        activate(navBtns, cur);
+        runBar(bar, INTERVAL);
+      }
+
+      makeAutoVariant(root, navBtns, go, () => cur);
+      go(0);
+    })();
+  </script>
+
+</body>
+</html>

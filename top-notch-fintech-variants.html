@@ -1,0 +1,730 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top-Notch Fintech Variants</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #ffffff;
+      --navy-deep: #0b0f19;
+      --orange-2: #e8912b;
+      --bg-warm: #f4f5f8;
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    
+    * { box-sizing: border-box; }
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      background: #0b0f19; /* Deep fintech navy/black */
+      color: #fff; 
+      margin: 0; 
+      padding: 60px 8%; 
+      -webkit-font-smoothing: antialiased;
+    }
+    h1 { 
+      text-align: center; 
+      font-weight: 800; 
+      font-size: clamp(28px, 4vw, 40px); 
+      margin-bottom: 20px; 
+      color: #fff; 
+      letter-spacing: -0.02em;
+    }
+    .page-desc {
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 80px;
+    }
+    
+    .section-header { 
+      margin: 100px 0 40px; 
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #e8912b;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title { 
+      font-size: 28px; 
+      font-weight: 700; 
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    /* =========================================================
+       1. STRATEGIC PILLARS  WITHOUT IMAGE ANIMATION
+       Accordion / Expandable (Light Background)
+       ========================================================= */
+    .sp-no-img {
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 60px 8%;
+    }
+    .sp-no-img-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .sp-no-img-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: #0b0f19;
+      line-height: 1.12;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .sp-no-img-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .sp-no-img-item {
+      border-top: 1px solid #e4e4e8;
+    }
+    .sp-no-img-item:last-child {
+      border-bottom: 1px solid #e4e4e8;
+    }
+    .sp-no-img-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 32px 0;
+      text-align: left;
+    }
+    .sp-no-img-trigger:hover .sp-no-img-title { color: #e8912b; }
+    .sp-no-img-trigger__num {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: #e8912b;
+      flex-shrink: 0;
+      width: 36px;
+    }
+    .sp-no-img-title {
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: #0b0f19;
+      line-height: 1.15;
+      flex: 1;
+      transition: color .3s ease;
+    }
+    .sp-no-img-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid #e4e4e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform .4s cubic-bezier(0.2, 0.8, 0.2, 1), background .3s ease;
+    }
+    .sp-no-img-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: #4a5568;
+      transition: stroke .3s ease;
+    }
+    .sp-no-img-item.open .sp-no-img-icon {
+      transform: rotate(45deg);
+      background: #e8912b;
+      border-color: #e8912b;
+    }
+    .sp-no-img-item.open .sp-no-img-icon svg { stroke: #fff; }
+    .sp-no-img-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .sp-no-img-item.open .sp-no-img-body {
+      max-height: 300px;
+    }
+    .sp-no-img-body__inner {
+      padding: 0 0 36px 60px;
+    }
+    .sp-no-img-body p {
+      font-size: 15px;
+      line-height: 1.82;
+      color: #4a5568;
+      max-width: 560px;
+      margin: 0;
+    }
+
+    /* =========================================================
+       2. STRATEGIC PILLARS  WITH IMAGE ANIMATION
+       Static cards, B&W to Color on hover
+       ========================================================= */
+    .sp-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      min-height: 500px;
+    }
+    .sp-cards .card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px 40px;
+      cursor: pointer;
+    }
+    .sp-cards .bg {
+      position: absolute;
+      inset: 0;
+      background: url('./unitey-background.png') center/cover;
+      background-color: #141f47;
+      transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.8s ease;
+      filter: grayscale(100%) brightness(0.3);
+    }
+    .sp-cards .card:nth-child(2) .bg {
+      background: url('./mps-background.png') center/cover;
+      background-color: #0e1330;
+    }
+    .sp-cards .card:nth-child(3) .bg {
+      background: url('./shukria-background.png') center/cover; /* Just using an existing background */
+      background-color: #111a36;
+    }
+    .sp-cards .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11, 15, 25, 1) 0%, rgba(11, 15, 25, 0.3) 100%);
+      opacity: 0.9;
+      transition: opacity 0.8s ease;
+    }
+    .sp-cards .card:hover .bg {
+      transform: scale(1.05);
+      filter: grayscale(0%) brightness(0.7);
+    }
+    .sp-cards .card:hover .overlay {
+      opacity: 0.7;
+    }
+    .sp-cards .content {
+      position: relative;
+      z-index: 1;
+    }
+    .sp-cards .num {
+      font-size: 14px;
+      font-weight: 800;
+      color: #e8912b;
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+    .sp-cards h3 {
+      font-size: 26px;
+      font-weight: 700;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .sp-cards p {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+
+    /* =========================================================
+       3. OPERATING COMPANIES  WITHOUT IMAGE ANIMATION
+       Exact Bento Grid from Variant 6
+       ========================================================= */
+    .v6 {
+      background: var(--paper);
+      border-radius: 20px;
+      padding: 60px 7%;
+    }
+    .v6-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 20px;
+    }
+    .v6-hero {
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+      background: var(--navy-deep);
+      border-radius: 14px;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 16px;
+      min-height: 420px;
+    }
+    .v6-hero .eyebrow { color: var(--orange-2); margin-bottom: 0; letter-spacing: 0.15em; }
+    .v6-hero .headline { color: #fff; font-size: clamp(24px, 2.4vw, 34px); margin-bottom: 8px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; margin-top:0;}
+    .v6-hero .stmt-text { color: rgba(255,255,255,.6); font-size: 15px; line-height: 1.6; margin: 0; }
+    .v6-cell {
+      background: var(--bg-warm);
+      border-radius: 14px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: transform .35s var(--ease), background .35s var(--ease);
+    }
+    .v6-cell:hover {
+      transform: translateY(-5px);
+      background: #e9eaec;
+    }
+    .v6-cell .co-logo { height: 48px; max-width:100%; object-fit: contain; }
+    .v6-cell .desc-text { font-size: 14px; color: #4a5568; line-height: 1.6; margin: 0; }
+    .v6-cell--wide {
+      grid-column: 2 / 4;
+    }
+    .v6-cell--wide .v6-cell-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0 36px;
+      align-items: center;
+    }
+    .v6-cell--wide .co-logo { height: 60px; max-width: 140px;}
+
+
+    /* =========================================================
+       4. OPERATING COMPANIES  WITH IMAGE ANIMATION
+       Deep interactive parallax grid with invert hover
+       ========================================================= */
+    .oc-img { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 32px; 
+    }
+    .oc-img .card { 
+      position: relative; 
+      border-radius: 20px; 
+      overflow: hidden; 
+      height: 400px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      text-align: center; 
+      cursor: pointer;
+    }
+    .oc-img .bg { 
+      position: absolute; 
+      inset: 0; 
+      background: url('./unitey-background.png') center/cover;
+      background-color: #1c2a5e;
+      transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.2s ease; 
+      filter: grayscale(100%) brightness(0.25); 
+    }
+    .oc-img .card:nth-child(2) .bg {
+      background: url('./shukria-background.png') center/cover;
+    }
+    .oc-img .card:nth-child(3) .bg {
+      background: url('./mps-background.png') center/cover;
+    }
+    .oc-img .card:nth-child(4) .bg {
+      background: url('./unitey-background.png') center/cover;
+    }
+    .oc-img .card:hover .bg { 
+      transform: scale(1.15) rotate(2deg); 
+      filter: grayscale(0%) brightness(0.4); 
+    }
+    .oc-img .content { 
+      position: relative; 
+      z-index: 1; 
+      padding: 48px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+    }
+    .oc-img .logo { 
+      height: 70px; 
+      margin-bottom: 0; 
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), margin 0.6s ease; 
+      filter: brightness(0) invert(1); 
+    }
+    .oc-img .card:hover .logo { 
+      transform: scale(1.05); 
+      margin-bottom: 32px;
+    }
+    .oc-img p { 
+      font-size: 15px; 
+      color: rgba(255, 255, 255, 0.9); 
+      line-height: 1.7; 
+      margin: 0;
+      opacity: 0; 
+      max-height: 0; 
+      overflow: hidden; 
+      transition: opacity 0.5s ease 0.1s, max-height 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); 
+    }
+    .oc-img .card:hover p { 
+      opacity: 1; 
+      max-height: 200px; 
+    }
+
+    @media (max-width: 900px) {
+      .oc-img { grid-template-columns: 1fr; }
+      .sp-cards { grid-template-columns: 1fr; }
+      
+      .v6-bento { grid-template-columns: 1fr; }
+      .v6-hero { grid-column: span 1; grid-row: auto; min-height: auto; }
+      .v6-cell--wide { grid-column: span 1; }
+      .v6-cell--wide .v6-cell-inner { grid-template-columns: 1fr; gap: 24px; text-align: center; justify-items: center; }
+      .v6-cell { align-items: center; text-align: center; }
+    }
+  
+    /* ═══════════════════════════════════════════
+       V14  STRATEGIC PILLARS: IMMERSIVE SPLIT
+       ═══════════════════════════════════════════ */
+    .v14 { 
+      width: 100vw; 
+      color: #fff; 
+      margin-left: calc(-50vw + 50%);
+      display: flex; 
+    }
+    .v14-left {
+      width: 45%; 
+      height: 100vh; 
+      position: sticky; 
+      top: 0;
+      background: var(--navy-deep);
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      padding: 8vw 6vw;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .v14-eyebrow {
+      font-size: 13px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange-2); margin-bottom: 24px;
+    }
+    .v14-left h2 { 
+      font-size: clamp(36px, 4vw, 56px); font-weight: 800; line-height: 1.1; margin: 0 0 24px; letter-spacing: -0.03em; color: #fff;
+    }
+    .v14-left p { 
+      font-size: clamp(16px, 1.5vw, 18px); color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 480px; margin: 0;
+    }
+    .v14-right { 
+      width: 55%; 
+      display: flex; 
+      flex-direction: column; 
+    }
+    .v14-card {
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      padding: 10vw 8vw;
+      border-bottom: 1px solid rgba(255,255,255,0.05); 
+      position: relative;
+      background-size: cover !important;
+      background-position: center !important;
+    }
+    .v14-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(11,15,25,0.95) 0%, rgba(11,15,25,0.7) 100%);
+      z-index: 0;
+    }
+    .v14-num { 
+      font-size: clamp(80px, 8vw, 140px); font-weight: 800; color: rgba(255,255,255,0.04); line-height: 1; margin-bottom: -40px; position: relative; z-index: 1; letter-spacing: -0.05em; 
+    }
+    .v14-card h3 { 
+      font-size: clamp(28px, 3vw, 42px); font-weight: 700; margin: 0 0 24px; position: relative; z-index: 2; letter-spacing: -0.02em; color: #fff; line-height: 1.2;
+    }
+    .v14-card p { 
+      font-size: clamp(16px, 1.5vw, 18px); line-height: 1.7; color: rgba(255,255,255,0.8); position: relative; z-index: 2; max-width: 500px; margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       V15  OPERATING COMPANIES: MASSIVE GRID
+       ═══════════════════════════════════════════ */
+    .v15 {
+      width: 100vw; 
+      margin-left: calc(-50vw + 50%);
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      background: var(--navy-deep);
+    }
+    .v15-cell {
+      position: relative; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: flex-end;
+      padding: 8vw 6vw; 
+      border: 1px solid rgba(255,255,255,0.05); 
+      cursor: default;
+      min-height: 50vw;
+      overflow: hidden;
+    }
+    .v15-bg {
+      position: absolute; inset: 0; z-index: 0; 
+      background-size: cover !important; background-position: center !important;
+      transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); 
+      transform: scale(1.05);
+    }
+    .v15-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(to top, rgba(11,15,25,0.95) 0%, rgba(11,15,25,0.6) 40%, rgba(11,15,25,0.2) 100%);
+      transition: background 0.6s ease;
+    }
+    .v15-cell:hover .v15-bg { transform: scale(1.0); }
+    .v15-cell:hover .v15-overlay { background: linear-gradient(to top, rgba(11,15,25,0.9) 0%, rgba(11,15,25,0.5) 50%, rgba(11,15,25,0.1) 100%); }
+    
+    .v15-content { position: relative; z-index: 2; display: flex; flex-direction: column; }
+    .v15-content .co-logo {
+      height: 64px; width: auto; max-width: 220px; object-fit: contain; margin-bottom: 32px; 
+      filter: brightness(0) invert(1); display: block;
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); transform-origin: left bottom;
+    }
+    .v15-cell:hover .co-logo { transform: scale(1.05); }
+    .v15-desc { 
+      font-size: clamp(15px, 1.3vw, 17px); line-height: 1.7; color: rgba(255,255,255,0.9); margin: 0; max-width: 480px; 
+    }
+
+    /* ═══════════════════════════════════════════
+       V16  OPERATING COMPANIES: IMMERSIVE SPLIT
+       ═══════════════════════════════════════════ */
+    .v16 {
+      width: 100vw; height: 100vh; min-height: 700px; margin-left: calc(-50vw + 50%);
+      display: flex; position: relative; background: var(--navy-deep); overflow: hidden;
+    }
+    .v16-bg-layer { position: absolute; inset: 0; z-index: 0; }
+    .v16-img { 
+      position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; 
+      background-size: cover; background-position: center; 
+    }
+    .v16-img.active { opacity: 1; }
+    
+    .v16-left {
+      width: 40%; height: 100%; position: relative; z-index: 1; display: flex; flex-direction: column;
+      padding: 6vw 4vw; 
+      background: rgba(11, 15, 25, 0.85); 
+      backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .v16-left h2 { font-size: clamp(32px, 3.5vw, 48px); font-weight: 800; margin: 0 0 40px; letter-spacing: -0.03em; color: #fff; line-height:1.1;}
+    .v16-list { display: flex; flex-direction: column; flex: 1; justify-content: center; gap: 8px; }
+    .v16-item { 
+      padding: 24px 32px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; 
+      background: transparent; border: 1px solid transparent;
+      transition: all 0.4s ease; opacity: 0.5;
+    }
+    .v16-item:hover { opacity: 0.8; background: rgba(255,255,255,0.03); }
+    .v16-item.active { 
+      opacity: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .v16-item .co-logo { height: 48px; width: auto; max-width: 180px; object-fit: contain; filter: brightness(0) invert(1); display: block; }
+    
+    .v16-right { width: 60%; height: 100%; position: relative; z-index: 1; }
+    .v16-desc-overlay { 
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 12vw 6vw 6vw; 
+      background: linear-gradient(to top, rgba(11, 15, 25, 0.95) 0%, rgba(11, 15, 25, 0.6) 50%, rgba(11, 15, 25, 0) 100%); 
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .v16-desc-text { 
+      font-size: clamp(20px, 2vw, 28px); line-height: 1.5; font-weight: 300; color: #fff; margin: 0; max-width: 680px; 
+      opacity: 0; transform: translateY(15px); transition: opacity 0.5s ease, transform 0.5s ease; 
+      position: absolute; bottom: 6vw; pointer-events: none;
+    }
+    .v16-desc-text.active { opacity: 1; transform: translateY(0); }
+    
+    @media (max-width: 900px) {
+        .v14 { flex-direction: column; }
+        .v14-left, .v14-right, .v16-left, .v16-right { width: 100%; height: auto; }
+        .v14-left { position: relative; height: auto; min-height: 40vh; }
+        .v14-card { min-height: 60vh; }
+        .v15 { grid-template-columns: 1fr; }
+        .v15-cell { min-height: 80vh; }
+        .v16 { flex-direction: column; height: auto; min-height: 120vh;}
+        .v16-left { height: auto; min-height: 60vh; }
+        .v16-right { height: 60vh; }
+    }
+
+</style>
+</head>
+<body>
+
+  <h1>Top-Notch Fintech Variants</h1>
+  <p class="page-desc">2 options per section. One strictly layout/UI driven. One highly animated with background images.</p>
+
+  <!-- ==============================================
+       STRATEGIC PILLARS
+       ============================================== -->
+
+  <div class="section-header">
+    <span class="eyebrow">Strategic Pillars  Option A</span>
+    <h2 class="section-title">Immersive Split Screen (Fills Entire Screen Viewport)</h2>
+  </div>
+
+    <div class="v14">
+    <div class="v14-left">
+      <span class="v14-eyebrow">Strategic Pillars</span>
+      <h2>Building the infrastructure behind the digital payments economy</h2>
+      <p>Combining sovereign mandate with commercial scale to deliver secure, resilient, and inclusive financial ecosystems.</p>
+    </div>
+    <div class="v14-right">
+      <div class="v14-card" style="background: url('./mps-background.png');">
+        <div class="v14-num">01</div>
+        <h3>National Payment Infrastructure</h3>
+        <p>Partnering with central banks to build resilient domestic payment infrastructure that strengthens financial sovereignty and enables sustainable economic growth.</p>
+      </div>
+      <div class="v14-card" style="background: url('./unitey-background.png');">
+        <div class="v14-num">02</div>
+        <h3>Managed Infrastructure Services</h3>
+        <p>Delivering managed services that enable central banks to operate resilient, secure ecosystems with modern open finance capabilities.</p>
+      </div>
+      <div class="v14-card" style="background: url('./shukria-background.png');">
+        <div class="v14-num">03</div>
+        <h3>Merchant & Consumer Inclusion</h3>
+        <p>Expanding access to digital financial services by enabling businesses and individuals to participate in the digital economy through accessible, interoperable payment solutions.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="section-header">
+    <span class="eyebrow">Strategic Pillars  Option B</span>
+    <h2 class="section-title">With Image Animation (Static Cards, Color on Hover)</h2>
+  </div>
+
+  <div class="sp-cards">
+    <div class="card">
+      <div class="bg"></div>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="num">01</div>
+        <h3>National Payment Infrastructure</h3>
+        <p>Partnering with central banks to build resilient domestic payment infrastructure that strengthens financial sovereignty and enables sustainable economic growth.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="bg"></div>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="num">02</div>
+        <h3>Managed Infrastructure Services</h3>
+        <p>Delivering managed services that enable central banks and financial institutions to operate resilient, secure, and future-ready financial ecosystems.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="bg"></div>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="num">03</div>
+        <h3>Merchant &amp; Consumer Inclusion</h3>
+        <p>Expanding access to digital financial services by enabling businesses and individuals to participate in the digital economy through accessible, interoperable payment solutions.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==============================================
+       OPERATING COMPANIES
+       ============================================== -->
+
+  <div class="section-header">
+    <span class="eyebrow">Operating Companies  Option A</span>
+    <h2 class="section-title">Massive Edge-to-Edge Grid (100vw / 100vh) NO EMPTY SPACE</h2>
+  </div>
+
+    <div class="v15">
+    <div class="v15-cell">
+      <div class="v15-bg" style="background-image: url('./mps-background.png');"></div>
+      <div class="v15-content">
+        <img class="co-logo" src="./mps-logo.png" alt="MPS Global">
+        <p class="v15-desc">A payments infrastructure company helping governments, central banks, and financial institutions design, build, and operate secure national payment systems.</p>
+      </div>
+    </div>
+    <div class="v15-cell">
+      <div class="v15-bg" style="background-image: url('./shukria-background.png');"></div>
+      <div class="v15-content">
+        <img class="co-logo" src="./Shukria_logo.png" alt="Shukria">
+        <p class="v15-desc">A CBUAE-licensed business powered by Mercury, delivering acquiring, lending, and card issuance solutions to businesses besides enabling banks and fintechs.</p>
+      </div>
+    </div>
+    <div class="v15-cell">
+      <div class="v15-bg" style="background-image: url('./unitey-background.png');"></div>
+      <div class="v15-content">
+        <img class="co-logo" src="./unitey-logo.png" alt="Unitey Business Services">
+        <p class="v15-desc">A joint venture with the Central Bank of the UAE, operating the country's critical payment infrastructure end-to-end.</p>
+      </div>
+    </div>
+    <div class="v15-cell">
+      <div class="v15-bg" style="background-image: url('./mps-background.png'); filter: hue-rotate(45deg) brightness(0.4);"></div>
+      <div class="v15-content">
+        <img class="co-logo" src="./papps.png" alt="PAPSSCard">
+        <p class="v15-desc">PAPSSCard is a joint venture between Afreximbank and Mercury, established to deliver a pan-African card scheme.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <span class="eyebrow">Operating Companies  Option B</span>
+    <h2 class="section-title">Immersive Split View (100vw / 100vh) NO EMPTY SPACE</h2>
+  </div>
+
+    <div class="v16">
+    <div class="v16-bg-layer">
+        <div id="v16-img1" class="v16-img active" style="background-image: url('./mps-background.png');"></div>
+        <div id="v16-img2" class="v16-img" style="background-image: url('./shukria-background.png');"></div>
+        <div id="v16-img3" class="v16-img" style="background-image: url('./unitey-background.png');"></div>
+        <div id="v16-img4" class="v16-img" style="background-image: url('./mps-background.png'); filter: hue-rotate(45deg);"></div>
+    </div>
+    
+    <div class="v16-left">
+      <div class="v16-header">
+        <span class="v14-eyebrow">The Unitey Network</span>
+        <h2>Operating<br>Companies</h2>
+      </div>
+      <div class="v16-list">
+        <button class="v16-item active" onmouseover="document.querySelectorAll('.v16-img').forEach(el=>el.classList.remove('active')); document.getElementById('v16-img1').classList.add('active'); document.querySelectorAll('.v16-item').forEach(el=>el.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.v16-desc-text').forEach(el=>{el.classList.remove('active');}); document.getElementById('v16-desc1').classList.add('active');">
+          <img class="co-logo" src="./mps-logo.png" alt="MPS Global">
+        </button>
+        <button class="v16-item" onmouseover="document.querySelectorAll('.v16-img').forEach(el=>el.classList.remove('active')); document.getElementById('v16-img2').classList.add('active'); document.querySelectorAll('.v16-item').forEach(el=>el.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.v16-desc-text').forEach(el=>{el.classList.remove('active');}); document.getElementById('v16-desc2').classList.add('active');">
+          <img class="co-logo" src="./Shukria_logo.png" alt="Shukria">
+        </button>
+        <button class="v16-item" onmouseover="document.querySelectorAll('.v16-img').forEach(el=>el.classList.remove('active')); document.getElementById('v16-img3').classList.add('active'); document.querySelectorAll('.v16-item').forEach(el=>el.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.v16-desc-text').forEach(el=>{el.classList.remove('active');}); document.getElementById('v16-desc3').classList.add('active');">
+          <img class="co-logo" src="./unitey-logo.png" alt="Unitey">
+        </button>
+        <button class="v16-item" onmouseover="document.querySelectorAll('.v16-img').forEach(el=>el.classList.remove('active')); document.getElementById('v16-img4').classList.add('active'); document.querySelectorAll('.v16-item').forEach(el=>el.classList.remove('active')); this.classList.add('active'); document.querySelectorAll('.v16-desc-text').forEach(el=>{el.classList.remove('active');}); document.getElementById('v16-desc4').classList.add('active');">
+          <img class="co-logo" src="./papps.png" alt="PAPSSCard">
+        </button>
+      </div>
+    </div>
+    <div class="v16-right">
+      <div class="v16-desc-overlay">
+        <p id="v16-desc1" class="v16-desc-text active">A payments infrastructure company helping governments, central banks, and financial institutions design, build, and operate secure national payment systems.</p>
+        <p id="v16-desc2" class="v16-desc-text">A CBUAE-licensed business powered by Mercury, delivering acquiring, lending, and card issuance solutions to businesses besides enabling banks and fintechs.</p>
+        <p id="v16-desc3" class="v16-desc-text">A joint venture with the Central Bank of the UAE, operating the country's critical payment infrastructure end-to-end.</p>
+        <p id="v16-desc4" class="v16-desc-text">PAPSSCard is a joint venture between Afreximbank and Mercury, established to deliver a pan-African card scheme.</p>
+      </div>
+    </div>
+  </div>
+    <div class="v16-right">
+      <div class="v16-desc-overlay">
+        <p id="v16-desc1" class="v16-desc-text active">A payments infrastructure company helping governments, central banks, and financial institutions design, build, and operate secure national payment systems.</p>
+        <p id="v16-desc2" class="v16-desc-text">A CBUAE-licensed business powered by Mercury, delivering acquiring, lending, and card issuance solutions to businesses besides enabling banks and fintechs.</p>
+        <p id="v16-desc3" class="v16-desc-text">A joint venture with the Central Bank of the UAE, operating the country's critical payment infrastructure end-to-end.</p>
+        <p id="v16-desc4" class="v16-desc-text">PAPSSCard is a joint venture between Afreximbank and Mercury, established to deliver a pan-African card scheme.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleV3(btn) {
+      const item = btn.closest('.sp-no-img-item');
+      // Collapse others
+      item.parentElement.querySelectorAll('.sp-no-img-item').forEach(i => i.classList.remove('open'));
+      // Toggle current
+      item.classList.add('open');
+    }
+  </script>
+</body>
+</html>

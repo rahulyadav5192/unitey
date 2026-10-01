@@ -1,0 +1,1111 @@
+/* ================================================================
+   UNITEY  ·  Shared Stylesheet
+   styles.css  —  All reusable styles shared across pages
+   ================================================================ */
+
+
+/* ──────────────────────────────────────────────────────────────
+   DESIGN TOKENS
+   ────────────────────────────────────────────────────────────── */
+:root {
+  --navy: #1c2a5e;
+  --navy-deep: #141f47;
+  --ink: #0e1330;
+  --orange: #e8912b;
+  --orange-2: #f0a33f;
+  --paper: #ffffff;
+  --paper-2: #f6f6f7;
+  --bg-warm: #f9f8f6;
+  --line: #e4e4e8;
+  --muted: #6b7183;
+  --muted-2: #9aa0ae;
+  --max: 1180px;
+  --ease: cubic-bezier(.5, .1, .15, 1);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   RESET
+   ────────────────────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+html {
+  scroll-behavior: smooth
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%
+}
+
+a {
+  text-decoration: none;
+  color: inherit
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   LAYOUT
+   ────────────────────────────────────────────────────────────── */
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   BUTTONS
+   ────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 17px 34px;
+  border: 0;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: transform .35s var(--ease), background .35s var(--ease), color .35s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px)
+}
+
+.btn-navy {
+  background: var(--navy);
+  color: #fff
+}
+
+.btn-navy:hover {
+  background: var(--navy-deep)
+}
+
+.btn-orange {
+  background: var(--orange);
+  color: #fff
+}
+
+.btn-orange:hover {
+  background: var(--orange-2)
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .3)
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(255, 255, 255, .6)
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid var(--line)
+}
+
+.btn-outline:hover {
+  border-color: var(--navy);
+  background: var(--paper-2)
+}
+
+.btn .arw {
+  transition: transform .35s var(--ease)
+}
+
+.btn:hover .arw {
+  transform: translateX(4px)
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   EYEBROW
+   ────────────────────────────────────────────────────────────── */
+.eyebrow {
+  font-size: 14px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: block;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   HEADER / NAVIGATION
+   ────────────────────────────────────────────────────────────── */
+header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  padding: 20px 0;
+  transition: background .45s var(--ease), border-color .45s var(--ease),
+    padding .45s var(--ease), transform .38s var(--ease);
+}
+
+header.solid {
+  background: rgba(255, 255, 255, .95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+  padding: 13px 0;
+}
+
+header.nav-hidden {
+  transform: translateY(-100%)
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo swap — white on transparent header, dark on solid header / footer */
+.logo {
+  display: inline-flex;
+  align-items: center
+}
+
+.logo-w {
+  height: 28px;
+  width: auto;
+  display: block
+}
+
+.logo-b {
+  height: 28px;
+  width: auto;
+  display: none
+}
+
+header.solid .logo-w {
+  display: none
+}
+
+header.solid .logo-b {
+  display: block
+}
+
+footer .logo-w {
+  display: none
+}
+
+footer .logo-b {
+  display: block
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  gap: 32px
+}
+
+.nav-links a {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .82);
+  position: relative;
+  padding-bottom: 5px;
+  transition: color .3s, opacity .3s;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1.5px;
+  width: 0;
+  background: var(--orange);
+  transition: width .4s var(--ease);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #fff;
+  opacity: 1
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%
+}
+
+header.solid .nav-links a {
+  color: rgba(28, 42, 94, .7)
+}
+
+header.solid .nav-links a:hover,
+header.solid .nav-links a.active {
+  color: var(--navy)
+}
+
+/* Nav dropdown (Portfolio → companies) */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center
+}
+
+.nav-item>a .caret {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform .3s var(--ease);
+}
+
+.nav-item:hover>a .caret,
+.nav-item:focus-within>a .caret {
+  transform: translateY(0) rotate(-135deg)
+}
+
+.nav-drop {
+  position: absolute;
+  top: 100%;
+  left: -18px;
+  margin-top: 14px;
+  min-width: 268px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--orange);
+  box-shadow: 0 18px 44px rgba(14, 19, 48, .14);
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .28s var(--ease), transform .28s var(--ease), visibility 0s linear .28s;
+  z-index: 10;
+}
+
+/* keeps the pointer from falling through the gap below the link */
+.nav-item::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 18px
+}
+
+.nav-item:hover .nav-drop,
+.nav-item:focus-within .nav-drop {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.nav-links .nav-drop a {
+  display: block;
+  padding: 12px 22px;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: none;
+  font-weight: 600;
+  color: var(--navy);
+  opacity: 1;
+  border-left: 2px solid transparent;
+  transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease);
+}
+
+.nav-links .nav-drop a::after {
+  display: none
+}
+
+.nav-links .nav-drop a:hover,
+.nav-links .nav-drop a:focus-visible {
+  background: var(--paper-2);
+  border-left-color: var(--orange);
+  color: var(--navy);
+}
+
+.nav-links .nav-drop a .sub {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  font-weight: 500;
+  color: var(--muted-2);
+  margin-top: 3px;
+  text-transform: none;
+}
+
+/* CTA pill in nav */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 14px 26px;
+  border-radius: 2px;
+  color: #fff;
+  background: linear-gradient(to right, var(--navy) 50%, var(--orange) 50%);
+  background-size: 200% 100%;
+  background-position: right;
+  transition: background-position .4s var(--ease), transform .35s var(--ease);
+}
+
+.nav-cta:hover {
+  background-position: left;
+  transform: translateY(-1px)
+}
+
+/* Contact link inside the mobile menu (desktop uses .nav-cta) */
+.nav-links .nav-links-cta {
+  display: none
+}
+
+/* Burger button */
+.burger {
+  position: relative;
+  z-index: 101;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.burger span {
+  width: 22px;
+  height: 1.5px;
+  background: #fff;
+  display: block;
+  transition: transform .3s, opacity .3s;
+}
+
+header.solid .burger span,
+.burger.open span {
+  background: var(--navy)
+}
+
+.burger.open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg)
+}
+
+.burger.open span:nth-child(2) {
+  opacity: 0
+}
+
+.burger.open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg)
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   HERO  —  shared base (inner pages)
+   index.html overrides these with its own style block
+   ────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* Background photo (inner-page heroes) */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .38;
+}
+
+/* Centred content wrapper */
+.hero-in {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Small eyebrow label above headline */
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--orange);
+  margin-bottom: 24px;
+  display: block;
+}
+
+/* Page headline */
+.hero-h1 {
+  font-size: clamp(40px, 4.6vw, 64px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.045em;
+  color: #fff;
+  margin-bottom: 28px;
+}
+
+.hero-h1 em {
+  font-style: normal;
+  color: var(--orange-2)
+}
+
+/* Subtitle paragraph */
+.hero-body {
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.76;
+  color: rgba(255, 255, 255, .65);
+  max-width: 560px;
+  margin-bottom: 44px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* CTA button row */
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   RISE ANIMATION  (hero entrance stagger)
+   ────────────────────────────────────────────────────────────── */
+/* Same timing on every page: headline → body (+.14s) → buttons (+.28s) */
+.rise {
+  opacity: 0;
+  transform: translateY(28px);
+  animation: rise .95s var(--ease) both;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: none
+  }
+}
+
+.d1 {
+  animation-delay: .14s
+}
+
+.d2 {
+  animation-delay: .28s
+}
+
+.d3 {
+  animation-delay: .42s
+}
+
+.d4 {
+  animation-delay: .56s
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   SCROLL REVEAL  (driven by reveal.js)
+   The transition is !important only while revealing so page-level
+   transitions (card hovers etc.) can't cancel the fade; .rv-done
+   hands control back once the reveal has finished.
+   ────────────────────────────────────────────────────────────── */
+.rv {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.rv:not(.rv-done) {
+  transition: opacity .85s var(--ease) var(--rv-delay, 0s),
+    transform .85s var(--ease) var(--rv-delay, 0s) !important;
+}
+
+.rv.in {
+  opacity: 1;
+  transform: none
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   READ LINK  (inline text links — insights, portfolio detail)
+   ────────────────────────────────────────────────────────────── */
+.readlink {
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  background: var(--orange);
+  padding: 7px 14px;
+  display: inline-block;
+  transition: background .3s var(--ease);
+}
+
+.readlink:hover {
+  background: var(--orange-2)
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   CTA SECTION  —  shared base (company, portfolio, index)
+   ────────────────────────────────────────────────────────────── */
+.cta {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  background: var(--ink);
+  z-index: 1;
+}
+
+/* Background image — class used by company/portfolio */
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .45;
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 11, 22, .8), rgba(8, 11, 22, .88));
+}
+
+.cta-in {
+  position: relative;
+  z-index: 2
+}
+
+.cta h2 {
+  font-size: clamp(32px, 3.9vw, 56px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  margin: 0 auto 20px;
+  max-width: 1000px;
+}
+
+.cta h2 em {
+  font-style: normal;
+  color: var(--orange)
+}
+
+.cta-body {
+  margin: 0 auto 40px;
+  max-width: 520px;
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, .72);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   NEWSLETTER  (news.html + blog-detail.html)
+   ────────────────────────────────────────────────────────────── */
+.newsletter {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0 120px;
+}
+
+.newsletter::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 50%, rgba(232, 145, 43, .06) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 15% 80%, rgba(28, 42, 94, .45) 0%, transparent 60%);
+}
+
+.newsletter-in {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.newsletter-left h2 {
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1.05;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.newsletter-left p {
+  font-size: 16px;
+  line-height: 1.78;
+  color: rgba(255, 255, 255, .55);
+  max-width: 420px;
+}
+
+.newsletter-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0
+}
+
+.nl-field {
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, .12);
+  background: rgba(255, 255, 255, .05);
+  margin-bottom: 12px;
+}
+
+.nl-field input {
+  flex: 1;
+  padding: 18px 22px;
+  font-family: inherit;
+  font-size: 15px;
+  border: 0;
+  outline: none;
+  color: #fff;
+  background: transparent;
+}
+
+.nl-field input::placeholder {
+  color: rgba(255, 255, 255, .3)
+}
+
+.nl-submit {
+  width: 100%;
+  padding: 20px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: var(--orange);
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  transition: background .35s var(--ease), transform .35s var(--ease);
+}
+
+.nl-submit:hover {
+  background: var(--orange-2);
+  transform: translateY(-2px)
+}
+
+.nl-note {
+  font-size: 12px;
+  color: rgba(255, 255, 255, .28);
+  line-height: 1.7;
+  margin-top: 14px
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   FORM FIELDS  (investments.html + contact.html)
+   ────────────────────────────────────────────────────────────── */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.form-field label {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 14px 16px;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color .3s var(--ease), background .3s var(--ease);
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: var(--muted-2)
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--orange);
+  background: #fff
+}
+
+.form-field select {
+  cursor: pointer
+}
+
+.form-field select option {
+  background: #fff;
+  color: var(--ink)
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 118px
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   FOOTER
+   ────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--paper-2);
+  padding: 72px 0 32px;
+  border-top: 1px solid var(--line);
+  position: relative;
+  z-index: 1;
+}
+
+.f-grid {
+  display: grid;
+  grid-template-columns: 1.5fr .9fr .9fr 1.1fr 1.1fr;
+  gap: 40px;
+}
+
+.f-brand .logo {
+  margin-bottom: 16px;
+  display: inline-flex
+}
+
+.f-brand p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 260px
+}
+
+.f-col h5 {
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.f-col a,
+.f-col span {
+  display: block;
+  font-size: 13px;
+  color: #4d5468;
+  margin-bottom: 11px;
+  line-height: 1.65;
+  transition: color .3s var(--ease);
+}
+
+.f-col a:hover {
+  color: var(--navy)
+}
+
+.f-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 52px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.f-bottom * {
+  font-size: 12px;
+  color: var(--muted-2)
+}
+
+.f-bottom nav {
+  display: flex;
+  gap: 24px
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   TRUE VIEWPORT HEIGHT
+   ────────────────────────────────────────────────────────────── */
+@supports (height: 100dvh) {
+  .hero {
+    min-height: 100dvh
+  }
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   RESPONSIVE  —  SHARED BREAKPOINTS
+   ────────────────────────────────────────────────────────────── */
+
+/* ── 1200px — footer 4-col tighten ── */
+@media (max-width: 1200px) {
+  .f-grid {
+    grid-template-columns: 1.3fr .9fr .9fr 1fr 1fr;
+    gap: 28px
+  }
+}
+
+/* ── 900px — burger nav, footer 2-col ── */
+@media (max-width: 900px) {
+  .burger {
+    display: flex
+  }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100dvh;
+    width: 78vw;
+    max-width: 320px;
+    background: #fff;
+    flex-direction: column;
+    gap: 0;
+    padding: 96px 32px 32px;
+    border-left: 1px solid var(--line);
+    z-index: 99;
+    overflow-y: auto;
+  }
+
+  .nav-links.open {
+    display: flex
+  }
+
+  .nav-links a {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--line);
+    opacity: 1;
+    color: var(--navy);
+    font-size: 13px;
+  }
+
+  .nav-links a::after {
+    display: none
+  }
+
+  .nav-links a:hover {
+    color: var(--navy)
+  }
+
+  /* dropdown becomes an indented list inside the slide-out menu */
+  .nav-item {
+    display: block
+  }
+
+  .nav-item::after {
+    display: none
+  }
+
+  .nav-item>a .caret {
+    display: none
+  }
+
+  .nav-drop {
+    position: static;
+    width: 100%;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    margin: 0;
+    min-width: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 6px 0 10px;
+  }
+
+  .nav-links .nav-drop a {
+    padding: 11px 0 11px 14px;
+    border-left: 2px solid var(--line);
+    border-bottom: 0;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .nav-links .nav-drop a:last-child {
+    padding-bottom: 4px
+  }
+
+  .nav-links .nav-drop a:hover {
+    background: none;
+    color: var(--navy)
+  }
+
+  .nav-links .nav-drop a .sub {
+    display: none
+  }
+
+  .nav-links a.active,
+  header.solid .nav-links a.active {
+    color: var(--orange)
+  }
+
+  header:has(.nav-links.open) {
+    transform: none
+  }
+
+  .nav-links .nav-links-cta {
+    display: block;
+    margin-top: 28px;
+    padding: 16px 0;
+    border-bottom: 0;
+    text-align: center;
+    background: var(--orange);
+    color: #fff;
+    letter-spacing: .12em;
+  }
+
+  .nav-links a.nav-links-cta:hover,
+  .nav-links a.nav-links-cta.active,
+  header.solid .nav-links a.nav-links-cta {
+    color: #fff
+  }
+
+  .nav-cta {
+    display: none
+  }
+
+  .f-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px
+  }
+
+  .newsletter-in {
+    grid-template-columns: 1fr;
+    gap: 52px
+  }
+}
+
+/* ── 640px — footer single-col, form single-col ── */
+@media (max-width: 640px) {
+  .f-grid {
+    grid-template-columns: 1fr
+  }
+
+  .f-bottom {
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start
+  }
+
+  .f-bottom nav {
+    flex-wrap: wrap;
+    gap: 12px
+  }
+
+  .form-row {
+    grid-template-columns: 1fr
+  }
+
+  .newsletter {
+    padding: 72px 0 80px
+  }
+
+  /* Mobile type rhythm: label → heading 12px, heading → text 12–18px, text → action 28px */
+  .eyebrow {
+    font-size: 12px;
+    margin-bottom: 12px
+  }
+
+  .hero-h1 {
+    margin-bottom: 18px
+  }
+
+  .hero-body {
+    margin-bottom: 28px
+  }
+
+  .cta h2 {
+    margin-bottom: 14px
+  }
+
+  .cta-body {
+    margin-bottom: 28px
+  }
+
+  .newsletter-in {
+    gap: 28px
+  }
+
+  .newsletter-left h2 {
+    margin-bottom: 10px
+  }
+
+  footer {
+    padding: 56px 0 28px
+  }
+
+  .f-bottom {
+    margin-top: 36px
+  }
+}
+
+/* ── 480px — tighter wrap padding ── */
+@media (max-width: 480px) {
+  .wrap {
+    padding: 0 20px
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important
+  }
+
+  html {
+    scroll-behavior: auto
+  }
+}

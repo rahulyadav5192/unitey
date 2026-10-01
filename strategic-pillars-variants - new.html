@@ -1,0 +1,1771 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategic Pillars  Section Variants</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink: #0e1330;
+      --navy: #1c2a5e;
+      --navy-deep: #141f47;
+      --orange: #e8912b;
+      --orange-2: #f0a33f;
+      --paper: #ffffff;
+      --paper-2: #f6f6f7;
+      --bg-warm: #f9f8f6;
+      --muted: #6b7183;
+      --muted-2: #9aa0ae;
+      --line: #e4e4e8;
+      --ease: cubic-bezier(.5, .1, .15, 1);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--paper-2);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      padding: 80px 48px;
+    }
+
+    /* ── Variant wrapper ── */
+    .variant {
+      max-width: 1180px;
+      margin: 0 auto 140px;
+    }
+
+    .variant-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .variant-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    .variant-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* shared eyebrow */
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 1  Sticky Left + Scrolling Right (Current)
+       Dark bg, sticky heading on left, numbered
+       pillars scrolling on the right with warm glow
+       ═══════════════════════════════════════════ */
+    .v1 {
+      background: #0e1330;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .v1::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 75% at 12% 50%, rgba(232, 145, 43, .09) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 55% at 90% 15%, rgba(28, 42, 94, .55) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .v1::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .v1-wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 0 80px;
+      align-items: start;
+      padding: 120px 8% 140px;
+    }
+
+    .v1-head {
+      position: sticky;
+      top: 80px;
+    }
+
+    .v1-head h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: #fff;
+      line-height: 1.12;
+      max-width: 420px;
+      margin-bottom: 28px;
+    }
+
+    .v1-head__rule {
+      width: 32px;
+      height: 1px;
+      background: linear-gradient(to right, rgba(201, 168, 76, .7), transparent);
+    }
+
+    .v1-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .v1-pillar {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 0 28px;
+      padding-bottom: 72px;
+    }
+
+    .v1-pillar:last-child {
+      padding-bottom: 0;
+    }
+
+    .v1-num {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: rgba(232, 145, 43, .9);
+      padding-top: 6px;
+    }
+
+    .v1-pillar h3 {
+      font-size: clamp(22px, 2.4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .v1-pillar p {
+      font-size: 14px;
+      line-height: 1.82;
+      color: rgba(255, 255, 255, .58);
+      max-width: 480px;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 2  Three-Column Cards on Dark
+       Centered header, then 3 equal cards below
+       with orange top accent and icon numbers
+       ═══════════════════════════════════════════ */
+    .v2 {
+      background: #0e1330;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      padding: 100px 7% 110px;
+    }
+
+    .v2::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 0%, rgba(28, 42, 94, .6) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .v2-header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .v2-header .eyebrow {
+      color: var(--orange);
+    }
+
+    .v2-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: #fff;
+      line-height: 1.12;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .v2-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .v2-card {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .06);
+      border-radius: 14px;
+      padding: 44px 36px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .v2-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--orange-2));
+    }
+
+    .v2-card__num {
+      font-size: 48px;
+      font-weight: 800;
+      color: rgba(232, 145, 43, .12);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .v2-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .v2-card p {
+      font-size: 14px;
+      line-height: 1.82;
+      color: rgba(255, 255, 255, .55);
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 3  Accordion / Expandable (Light)
+       Light background, centered heading, pillars
+       as clickable accordion rows with expand/collapse
+       ═══════════════════════════════════════════ */
+    .v3 {
+      background: var(--paper);
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 100px 8% 110px;
+    }
+
+    .v3-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .v3-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: var(--ink);
+      line-height: 1.12;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .v3-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .v3-item {
+      border-top: 1px solid var(--line);
+    }
+
+    .v3-item:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .v3-trigger {
+      width: 100%;
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 32px 0;
+      text-align: left;
+    }
+
+    .v3-trigger:hover .v3-title {
+      color: var(--orange);
+    }
+
+    .v3-trigger__num {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: var(--orange);
+      flex-shrink: 0;
+      width: 36px;
+    }
+
+    .v3-title {
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      line-height: 1.15;
+      flex: 1;
+      transition: color .3s ease;
+    }
+
+    .v3-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform .4s var(--ease), background .3s ease;
+    }
+
+    .v3-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--muted);
+      transition: stroke .3s ease;
+    }
+
+    .v3-item.open .v3-icon {
+      transform: rotate(45deg);
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+
+    .v3-item.open .v3-icon svg {
+      stroke: #fff;
+    }
+
+    .v3-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .5s var(--ease);
+    }
+
+    .v3-item.open .v3-body {
+      max-height: 300px;
+    }
+
+    .v3-body__inner {
+      padding: 0 0 36px 60px;
+    }
+
+    .v3-body p {
+      font-size: 15px;
+      line-height: 1.82;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 4  Full-Width Horizontal Steps
+       Dark bg, pillars shown as a horizontal
+       stepped flow with connecting line and
+       image placeholders
+       ═══════════════════════════════════════════ */
+    .v4 {
+      background: var(--ink);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      padding: 100px 7% 110px;
+    }
+
+    .v4::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 70% at 50% 100%, rgba(232, 145, 43, .06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .v4-header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .v4-header .eyebrow {
+      color: var(--orange);
+    }
+
+    .v4-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: #fff;
+      line-height: 1.12;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .v4-steps {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    /* connecting line behind steps */
+    .v4-steps::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232, 145, 43, .35), transparent);
+    }
+
+    .v4-step {
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .v4-step__dot {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(232, 145, 43, .1);
+      border: 2px solid rgba(232, 145, 43, .4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 36px;
+      position: relative;
+    }
+
+    .v4-step__dot span {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--orange);
+    }
+
+    .v4-step__img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid rgba(255, 255, 255, .06);
+      border-radius: 12px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, .15);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .v4-step h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .v4-step p {
+      font-size: 13px;
+      line-height: 1.82;
+      color: rgba(255, 255, 255, .5);
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 5  Bento Grid with Image Blocks
+       Light bg, asymmetric bento-style grid
+       mixing text pillars with image placeholder
+       blocks for a modern editorial feel
+       ═══════════════════════════════════════════ */
+    .v5 {
+      background: var(--bg-warm);
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 100px 7% 110px;
+    }
+
+    .v5-header {
+      margin-bottom: 56px;
+    }
+
+    .v5-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: var(--ink);
+      line-height: 1.12;
+      max-width: 520px;
+    }
+
+    .v5-bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 20px;
+    }
+
+    .v5-cell {
+      background: var(--paper);
+      border-radius: 14px;
+      padding: 44px 40px 48px;
+      position: relative;
+    }
+
+    .v5-cell--wide {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 60px;
+      align-items: center;
+    }
+
+    .v5-cell--img {
+      padding: 0;
+      overflow: hidden;
+      min-height: 260px;
+    }
+
+    .v5-cell--img-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      background:
+        linear-gradient(135deg, rgba(28, 42, 94, .06) 0%, rgba(232, 145, 43, .06) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .v5-cell__num {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: var(--orange);
+      margin-bottom: 20px;
+    }
+
+    .v5-cell h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .v5-cell p {
+      font-size: 14px;
+      line-height: 1.82;
+      color: var(--muted);
+    }
+
+    .v5-wide-text {
+      padding: 44px 0 44px 40px;
+    }
+
+    .v5-wide-img {
+      height: 100%;
+      min-height: 280px;
+      background:
+        linear-gradient(135deg, rgba(28, 42, 94, .06) 0%, rgba(232, 145, 43, .06) 100%);
+      border-radius: 0 14px 14px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 6  Zigzag Image Rows
+       Alternating large image + glassmorphic text
+       panel, left-right-left pattern. Dark bg.
+       ═══════════════════════════════════════════ */
+    .v6 {
+      background: #0b0f24;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      padding: 100px 0 0;
+    }
+
+    .v6::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 80% 20%, rgba(28, 42, 94, .5) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(232, 145, 43, .06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .v6-header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 8%;
+      margin-bottom: 80px;
+    }
+
+    .v6-header .eyebrow {
+      color: var(--orange);
+    }
+
+    .v6-header h2 {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: #fff;
+      line-height: 1.1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .v6-row {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+    }
+
+    .v6-row--flip .v6-img {
+      order: 2;
+    }
+
+    .v6-row--flip .v6-text {
+      order: 1;
+    }
+
+    .v6-img {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+    }
+
+    .v6-img__placeholder {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(28, 42, 94, .18) 0%, rgba(14, 19, 48, .4) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, .12);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* decorative grid lines on image */
+    .v6-img__placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .v6-text {
+      display: flex;
+      align-items: center;
+      padding: 60px 7%;
+    }
+
+    .v6-text__inner {
+      background: rgba(255, 255, 255, .04);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, .07);
+      border-radius: 16px;
+      padding: 48px 44px;
+      width: 100%;
+    }
+
+    .v6-text__num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-2));
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+
+    .v6-text h3 {
+      font-size: clamp(22px, 2.2vw, 30px);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: #fff;
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+
+    .v6-text p {
+      font-size: 14.5px;
+      line-height: 1.82;
+      color: rgba(255, 255, 255, .55);
+    }
+
+    /* orange accent line between rows */
+    .v6-row+.v6-row {
+      border-top: 1px solid rgba(232, 145, 43, .12);
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 7  Tabbed Image Showcase
+       Interactive pillar tabs on top, large image
+       panel below with text overlay. Stripe-style.
+       ═══════════════════════════════════════════ */
+    .v7 {
+      background: var(--ink);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      padding: 90px 7% 0;
+    }
+
+    .v7::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(232, 145, 43, .07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .v7-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 56px;
+    }
+
+    .v7-header .eyebrow {
+      color: var(--orange);
+    }
+
+    .v7-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: #fff;
+      line-height: 1.1;
+      max-width: 520px;
+    }
+
+    .v7-tabs {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+
+    .v7-tab {
+      background: none;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 28px 24px;
+      text-align: left;
+      position: relative;
+      transition: background .3s ease;
+    }
+
+    .v7-tab:hover {
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .v7-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transition: transform .4s var(--ease);
+    }
+
+    .v7-tab.active::after {
+      transform: scaleX(1);
+    }
+
+    .v7-tab__num {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: rgba(232, 145, 43, .4);
+      display: block;
+      margin-bottom: 12px;
+      transition: color .3s ease;
+    }
+
+    .v7-tab.active .v7-tab__num {
+      color: var(--orange);
+    }
+
+    .v7-tab__title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: rgba(255, 255, 255, .35);
+      line-height: 1.2;
+      display: block;
+      transition: color .3s ease;
+    }
+
+    .v7-tab.active .v7-tab__title {
+      color: #fff;
+    }
+
+    .v7-showcase {
+      position: relative;
+      z-index: 1;
+    }
+
+    .v7-panel {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      min-height: 400px;
+    }
+
+    .v7-panel.active {
+      display: grid;
+    }
+
+    .v7-panel__img {
+      position: relative;
+      min-height: 400px;
+      overflow: hidden;
+    }
+
+    .v7-panel__img-inner {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(28, 42, 94, .25) 0%, rgba(14, 19, 48, .5) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, .1);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* subtle animated pulse on the image area */
+    .v7-panel__img-inner::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 145, 43, .08) 0%, transparent 70%);
+      animation: v7pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes v7pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: .6;
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: 1;
+      }
+    }
+
+    .v7-panel__text {
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .v7-panel__text h3 {
+      font-size: clamp(24px, 2.4vw, 32px);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: #fff;
+      line-height: 1.12;
+      margin-bottom: 20px;
+    }
+
+    .v7-panel__text p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(255, 255, 255, .55);
+      margin-bottom: 32px;
+    }
+
+    .v7-panel__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    .v7-panel__tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--orange);
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 8  Full-Bleed Stacked Image Cards
+       Each pillar is a tall card with full-bleed
+       bg image, text overlaid at bottom over
+       gradient. Side progress indicator.
+       ═══════════════════════════════════════════ */
+    .v8 {
+      background: var(--paper);
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 90px 7% 100px;
+    }
+
+    .v8-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 56px;
+    }
+
+    .v8-header h2 {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      color: var(--ink);
+      line-height: 1.1;
+      max-width: 520px;
+    }
+
+    .v8-header__sub {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 320px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .v8-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .v8-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 380px;
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+    }
+
+    .v8-card__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .v8-card__bg-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, .08);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* each card gets a unique gradient tone */
+    .v8-card:nth-child(1) .v8-card__bg {
+      background: linear-gradient(135deg, #141f47 0%, #0e1330 40%, #1a1535 100%);
+    }
+
+    .v8-card:nth-child(2) .v8-card__bg {
+      background: linear-gradient(135deg, #1c2a5e 0%, #0e1330 50%, #0f1a3a 100%);
+    }
+
+    .v8-card:nth-child(3) .v8-card__bg {
+      background: linear-gradient(135deg, #1a2248 0%, #141c3e 40%, #0e1330 100%);
+    }
+
+    /* decorative grid overlay */
+    .v8-card__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .v8-card__side {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 44px 0;
+    }
+
+    .v8-card__num {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .v8-card__line {
+      flex: 1;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(232, 145, 43, .4), transparent);
+    }
+
+    .v8-card__img {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .v8-card__img-inner {
+      width: 88%;
+      aspect-ratio: 4 / 3;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, .12);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .v8-card__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 56px 48px 56px 24px;
+    }
+
+    .v8-card__content h3 {
+      font-size: clamp(22px, 2.4vw, 30px);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: #fff;
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+
+    .v8-card__content p {
+      font-size: 14.5px;
+      line-height: 1.82;
+      color: rgba(255, 255, 255, .55);
+      max-width: 440px;
+    }
+
+    /* subtle orange glow on hover */
+    .v8-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse 40% 60% at 30% 50%, rgba(232, 145, 43, .06) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity .5s ease;
+      pointer-events: none;
+    }
+
+    .v8-card:hover::before {
+      opacity: 1;
+    }
+
+    /* ═══════════════════════════════════════════
+       VERSION 9  Cinematic Vertical Accordion
+       Full-height pillars. Hovering expands the column,
+       revealing the image and description.
+       ═══════════════════════════════════════════ */
+    .v9 {
+      background: var(--ink);
+      border-radius: 16px;
+      overflow: hidden;
+      padding: 80px 0 0;
+    }
+
+    .v9-header {
+      padding: 0 7%;
+      margin-bottom: 56px;
+      text-align: center;
+    }
+
+    .v9-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      color: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .v9-container {
+      display: flex;
+      height: 500px;
+      width: 100%;
+    }
+
+    .v9-pillar {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .v9-pillar:last-child {
+      border-right: none;
+    }
+
+    .v9-pillar:hover {
+      flex: 2.5;
+    }
+
+    .v9-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(28, 42, 94, .5), rgba(14, 19, 48, .8));
+      transition: transform 0.6s ease;
+      transform: scale(1.1);
+    }
+
+    .v9-pillar:hover .v9-bg {
+      transform: scale(1);
+    }
+
+    .v9-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(14, 19, 48, 0.7);
+      transition: background 0.6s ease;
+    }
+
+    .v9-pillar:hover .v9-overlay {
+      background: rgba(14, 19, 48, 0.3);
+    }
+
+    .v9-content {
+      position: absolute;
+      inset: 0;
+      padding: 48px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      z-index: 2;
+    }
+
+    .v9-num {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--orange);
+      margin-bottom: 24px;
+    }
+
+    .v9-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      white-space: nowrap;
+    }
+
+    .v9-desc {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      max-width: 400px;
+    }
+
+    .v9-pillar:hover .v9-desc {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+
+    /* ═══════════════════════════════════════════
+       VERSION 10  3D Perspective Grid
+       Cards are tilted in 3D space and flatten on hover.
+       ═══════════════════════════════════════════ */
+    .v10 {
+      background: var(--bg-warm);
+      border-radius: 16px;
+      padding: 100px 7%;
+      perspective: 1200px;
+    }
+
+    .v10-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .v10-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--ink);
+    }
+
+    .v10-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      transform-style: preserve-3d;
+    }
+
+    .v10-card {
+      background: var(--paper);
+      padding: 48px 40px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transform: rotateX(15deg) rotateY(-10deg) translateZ(-20px);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+    }
+
+    .v10-card:hover {
+      transform: rotateX(0deg) rotateY(0deg) translateZ(30px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    .v10-num {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--orange);
+      margin-bottom: 24px;
+    }
+
+    .v10-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .v10-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════
+       VERSION 11  Animated Vertical Timeline
+       A connecting glowing line with pulsing nodes.
+       ═══════════════════════════════════════════ */
+    .v11 {
+      background: var(--navy-deep);
+      border-radius: 16px;
+      padding: 100px 7%;
+    }
+
+    .v11-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .v11-header h2 {
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 700;
+      color: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .v11-timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-left: 40px;
+    }
+
+    .v11-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .v11-line-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      background: var(--orange);
+      height: 0%;
+      transition: height 1s ease;
+    }
+
+    .v11-timeline:hover .v11-line-progress {
+      height: 100%;
+    }
+
+    .v11-item {
+      position: relative;
+      margin-bottom: 64px;
+    }
+
+    .v11-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .v11-node {
+      position: absolute;
+      left: -49px;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 2px solid var(--orange);
+      z-index: 2;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .v11-item:hover .v11-node {
+      transform: scale(1.3);
+      background: var(--orange);
+      box-shadow: 0 0 15px var(--orange);
+    }
+
+    .v11-content {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 40px;
+      transition: transform 0.4s ease, background 0.4s ease;
+    }
+
+    .v11-item:hover .v11-content {
+      transform: translateX(10px);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .v11-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .v11-desc {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+      .v9-container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .v9-pillar {
+        height: 120px;
+        transition: height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .v9-pillar:hover {
+        height: 320px;
+      }
+
+      .v9-title {
+        white-space: normal;
+      }
+
+      .v10-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .v10-card {
+        transform: none !important;
+      }
+
+      .v10-card:hover {
+        transform: translateY(-5px) !important;
+      }
+    }
+
+
+    /* ═══════════════════════════════════════════
+       VERSION 14  Immersive Full-Screen Split
+       ═══════════════════════════════════════════ */
+    .v14 {
+      width: 100%;
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .v14-wrap {
+      display: flex;
+      width: 100%;
+    }
+
+    .v14-left {
+      width: 50%;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10%;
+    }
+
+    .v14-left h2 {
+      font-size: clamp(40px, 5vw, 70px);
+      font-weight: 800;
+      line-height: 1.05;
+      margin: 0 0 24px;
+      letter-spacing: -0.04em;
+    }
+
+    .v14-left p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      max-width: 400px;
+    }
+
+    .v14-right {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .v14-card {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 15%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .v14-card:nth-child(even) {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .v14-num {
+      font-size: 120px;
+      font-weight: 800;
+      color: rgba(232, 145, 43, 0.1);
+      line-height: 1;
+      margin-bottom: -40px;
+      position: relative;
+      z-index: 0;
+      letter-spacing: -0.05em;
+    }
+
+    .v14-card h3 {
+      font-size: clamp(30px, 3.5vw, 48px);
+      font-weight: 700;
+      margin: 0 0 24px;
+      position: relative;
+      z-index: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .v14-card p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.6);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ═══════════════════════════════════════════
+       VERSION 15  Edge-to-Edge Expanding Grid
+       ═══════════════════════════════════════════ */
+    .v15 {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      margin-left: calc(-50vw + 50%);
+      /* bleed out of container if any */
+      overflow: hidden;
+      background: #000;
+    }
+
+    .v15-pillar {
+      flex: 1;
+      height: 100%;
+      position: relative;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      transition: flex 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: crosshair;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 5vw;
+    }
+
+    .v15-pillar:last-child {
+      border: none;
+    }
+
+    .v15-pillar:hover {
+      flex: 2;
+    }
+
+    .v15-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--navy-deep);
+      /* Fallback */
+      z-index: 0;
+      transition: filter 0.7s ease, transform 0.7s ease;
+      filter: grayscale(80%) brightness(0.4);
+      transform: scale(1.05);
+    }
+
+    .v15-pillar:hover .v15-bg {
+      filter: grayscale(0%) brightness(0.8);
+      transform: scale(1);
+    }
+
+    .v15-content {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+    }
+
+    .v15-num {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--orange);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .v15-title {
+      font-size: clamp(24px, 3vw, 40px);
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .v15-desc {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 400px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
+    }
+
+    .v15-pillar:hover .v15-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <!-- ════════════════════════════════════════════════════
+     VERSION 14  Immersive Full-Screen Split (NO EMPTY SPACE)
+     ════════════════════════════════════════════════════ -->
+  <div class="variant" style="max-width: 100%; margin: 0 0 140px;">
+    <div class="variant-meta" style="padding: 0 48px;">
+      <span class="variant-num">V14</span>
+      <span class="variant-title">Immersive Split Screen (Fills Entire Screen Viewport)</span>
+    </div>
+    <div class="v14">
+      <div class="v14-wrap">
+        <div class="v14-left">
+          <h2>Strategic Pillars</h2>
+          <p>Building the infrastructure behind the digital payments economy with deep sovereign integration and
+            commercial scale.</p>
+        </div>
+        <div class="v14-right">
+          <div class="v14-card"
+            style="background: linear-gradient(rgba(14,19,48,0.8), rgba(14,19,48,0.8)), url('./mps-background.png') center/cover;">
+            <div class="v14-num">01</div>
+            <h3>National Payment Infrastructure</h3>
+            <p>Partnering with central banks to build resilient domestic payment infrastructure that strengthens
+              financial sovereignty and enables sustainable economic growth.</p>
+          </div>
+          <div class="v14-card"
+            style="background: linear-gradient(rgba(14,19,48,0.85), rgba(14,19,48,0.85)), url('./unitey-background.png') center/cover;">
+            <div class="v14-num">02</div>
+            <h3>Managed Infrastructure Services</h3>
+            <p>Delivering managed services that enable central banks to operate resilient, secure ecosystems with modern
+              open finance capabilities.</p>
+          </div>
+          <div class="v14-card"
+            style="background: linear-gradient(rgba(14,19,48,0.8), rgba(14,19,48,0.8)), url('./shukria-background.png') center/cover;">
+            <div class="v14-num">03</div>
+            <h3>Merchant & Consumer Inclusion</h3>
+            <p>Expanding access to digital financial services by enabling businesses and individuals to participate in
+              the digital economy through accessible, interoperable payment solutions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════
+     VERSION 15  Edge-to-Edge Expanding Grid (NO EMPTY SPACE)
+     ════════════════════════════════════════════════════ -->
+  <div class="variant" style="max-width: 100%; margin: 0 0 140px;">
+    <div class="variant-meta" style="padding: 0 48px;">
+      <span class="variant-num">V15</span>
+      <span class="variant-title">Edge-to-Edge Expanding Grid (100vw / 100vh)</span>
+    </div>
+    <div class="v15">
+      <div class="v15-pillar">
+        <div class="v15-bg" style="background: linear-gradient(135deg, #1c2a5e, #141f47);"></div>
+        <div class="v15-content">
+          <span class="v15-num">01</span>
+          <h3 class="v15-title">National Payment Infrastructure</h3>
+          <p class="v15-desc">Partnering with central banks to build resilient domestic payment infrastructure that
+            strengthens financial sovereignty.</p>
+        </div>
+      </div>
+      <div class="v15-pillar">
+        <div class="v15-bg" style="background: linear-gradient(135deg, #141f47, #0e1330);"></div>
+        <div class="v15-content">
+          <span class="v15-num">02</span>
+          <h3 class="v15-title">Managed Infrastructure Services</h3>
+          <p class="v15-desc">Delivering managed services that enable central banks to operate resilient, secure, and
+            future-ready financial ecosystems.</p>
+        </div>
+      </div>
+      <div class="v15-pillar">
+        <div class="v15-bg" style="background: linear-gradient(135deg, #0e1330, #0a0d22);"></div>
+        <div class="v15-content">
+          <span class="v15-num">03</span>
+          <h3 class="v15-title">Merchant & Consumer Inclusion</h3>
+          <p class="v15-desc">Expanding access to digital financial services by enabling businesses and individuals to
+            participate in the digital economy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

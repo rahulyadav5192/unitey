@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(ls:*)",
+      "Bash(where pdftotext:*)",
+      "Bash(where mutool:*)",
+      "Bash(where python:*)",
+      "Bash(where python3:*)",
+      "Bash(pdftotext -layout 'D:\\\\My Stuff 1\\\\Work\\\\PMIT\\\\75. Unitey Website\\\\unitey\\\\Unitey Website Aug 2026.pdf' -)",
+      "Bash(pdftotext:*)",
+      "Read(//d/My Stuff 1/Work/PMIT/75. Unitey Website/**)",
+      "Bash(python3 -c \":*)",
+      "Bash(python3 -c \"import sys; sys.stdout.buffer.write\\(sys.stdin.buffer.read\\(\\)\\)\")",
+      "Bash(python3:*)",
+      "Bash(python -c \"import pdfplumber; pdf = pdfplumber.open\\(''''Unitey Website Aug 2026.pdf''''\\); print\\(f''''Pages: {len\\(pdf.pages\\)}''''\\); [print\\(f''''--- PAGE {i+1} ---\\\\n{pdf.pages[i].extract_text\\(\\)}''''\\) for i in range\\(min\\(15, len\\(pdf.pages\\)\\)\\)]\")",
+      "Bash(powershell -Command \"Get-ChildItem -Filter ''*.html'' | ForEach-Object { \\(Get-Content $_FullName -Raw -Encoding UTF8\\) -replace ''—'', '''' | Set-Content $_FullName -NoNewline -Encoding UTF8 }; Write-Host ''Done''\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"D:\\\\My Stuff 1\\\\Work\\\\PMIT\\\\75. Unitey Website\\\\unitey\\\\remove_emdash.ps1\")"
+    ]
+  }
+}
