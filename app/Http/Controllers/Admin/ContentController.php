@@ -6,10 +6,12 @@ use App\Cms\Catalog;
 use App\Http\Controllers\Controller;
 use App\Models\CmsBlock;
 use App\Models\Inquiry;
+use App\Models\Subscriber;
 use App\Services\CmsStore;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\View\View;
 
 class ContentController extends Controller
@@ -21,6 +23,7 @@ class ContentController extends Controller
         return view('admin.home', [
             'pages' => Catalog::publicPages(),
             'messages' => Inquiry::query()->count(),
+            'subscribers' => Subscriber::query()->count(),
         ]);
     }
 
@@ -76,6 +79,71 @@ class ContentController extends Controller
         return view('admin.messages', [
             'messages' => Inquiry::query()->latest()->get(),
         ]);
+    }
+
+    public function subscribers(): View
+    {
+        return view('admin.subscribers', [
+            'subscribers' => Subscriber::query()->latest()->get(),
+        ]);
+    }
+
+    public function destroyMessage(Inquiry $inquiry): RedirectResponse
+    {
+        $inquiry->delete();
+
+        return redirect()->route('admin.messages')->with('status', 'Message deleted.');
+    }
+
+    public function destroySubscriber(Subscriber $subscriber): RedirectResponse
+    {
+        $subscriber->delete();
+
+        return redirect()->route('admin.subscribers')->with('status', 'Subscriber deleted.');
+    }
+
+    public function exportMessages(): StreamedResponse
+    {
+        return $this->csv('unitey-messages.csv', ['Date', 'From', 'Name', 'Email', 'Phone', 'Business', 'Country', 'Inquiry', 'Message'], Inquiry::query()->latest()->get(), function (Inquiry $message) {
+            return [
+                $message->created_at->timezone(config('app.timezone'))->format('Y-m-d H:i'),
+                ucfirst($message->source),
+                $message->name,
+                $message->email,
+                $message->phone,
+                $message->business,
+                $message->country,
+                $message->inquiry,
+                $message->message,
+            ];
+        });
+    }
+
+    public function exportSubscribers(): StreamedResponse
+    {
+        return $this->csv('unitey-subscribers.csv', ['Date', 'Email', 'Signed up from'], Subscriber::query()->latest()->get(), function (Subscriber $subscriber) {
+            return [
+                $subscriber->created_at->timezone(config('app.timezone'))->format('Y-m-d H:i'),
+                $subscriber->email,
+                ucfirst($subscriber->source),
+            ];
+        });
+    }
+
+    /**
+     * @param  array<int, string>  $headings
+     * @param  iterable<int, mixed>  $rows
+     */
+    private function csv(string $filename, array $headings, iterable $rows, callable $map): StreamedResponse
+    {
+        return response()->streamDownload(function () use ($headings, $rows, $map) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, $headings);
+            foreach ($rows as $row) {
+                fputcsv($out, $map($row));
+            }
+            fclose($out);
+        }, $filename, ['Content-Type' => 'text/csv']);
     }
 
     /**

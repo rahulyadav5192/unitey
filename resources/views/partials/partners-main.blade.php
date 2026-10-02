@@ -65,7 +65,7 @@
       <form class="connect-form rv" method="POST" action="{{ route('inquiries.store') }}">
         @csrf
         <input type="hidden" name="source" value="partners">
-        @if (session('sent'))
+        @if (session('sent') === 'partners')
           <p style="margin:0 0 16px;font-weight:600">Thank you. Your message has been received.</p>
         @endif
         <div class="form-row">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\SessionController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.index')->name('home');
@@ -26,6 +27,7 @@ Route::get('/privacy-policy.html', fn () => redirect()->route('privacy-policy'))
 Route::get('/terms-conditions.html', fn () => redirect()->route('terms-conditions'));
 
 Route::post('/inquiries', [InquiryController::class, 'store'])->name('inquiries.store');
+Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribers.store');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
@@ -34,6 +36,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/', [ContentController::class, 'home'])->name('home');
         Route::get('/messages', [ContentController::class, 'messages'])->name('messages');
+        Route::delete('/messages/{inquiry}', [ContentController::class, 'destroyMessage'])->name('messages.destroy');
+        Route::get('/messages/export', [ContentController::class, 'exportMessages'])->name('messages.export');
+        Route::get('/subscribers', [ContentController::class, 'subscribers'])->name('subscribers');
+        Route::delete('/subscribers/{subscriber}', [ContentController::class, 'destroySubscriber'])->name('subscribers.destroy');
+        Route::get('/subscribers/export', [ContentController::class, 'exportSubscribers'])->name('subscribers.export');
         Route::get('/pages/{page}', [ContentController::class, 'edit'])->name('edit');
         Route::put('/pages/{page}', [ContentController::class, 'update'])->name('update');
         Route::post('/pages/{page}/sections/{section}/restore', [ContentController::class, 'restore'])->name('restore');

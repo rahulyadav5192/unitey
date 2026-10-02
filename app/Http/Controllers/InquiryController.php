@@ -10,15 +10,18 @@ class InquiryController extends Controller
 {
     public function store(Request $request): RedirectResponse
     {
+        $source = $request->input('source', 'contact');
+        $contact = $source === 'contact';
+
         $data = $request->validate([
             'source' => ['nullable', 'string', 'max:40'],
-            'name' => ['nullable', 'string', 'max:160'],
-            'email' => ['nullable', 'email', 'max:160'],
+            'name' => [$contact ? 'required' : 'nullable', 'string', 'max:160'],
+            'email' => [$contact ? 'required' : 'nullable', 'email', 'max:160'],
             'phone' => ['nullable', 'string', 'max:80'],
             'business' => ['nullable', 'string', 'max:160'],
             'country' => ['nullable', 'string', 'max:160'],
             'inquiry' => ['nullable', 'string', 'max:160'],
-            'message' => ['nullable', 'string', 'max:5000'],
+            'message' => [$contact ? 'required' : 'nullable', 'string', 'max:5000'],
         ]);
 
         Inquiry::query()->create([
@@ -32,6 +35,6 @@ class InquiryController extends Controller
             'message' => $data['message'] ?? null,
         ]);
 
-        return back()->with('sent', true);
+        return back()->with('sent', $data['source'] ?? 'contact');
     }
 }

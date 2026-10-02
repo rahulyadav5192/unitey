@@ -21,5 +21,11 @@
       <p>Inquiries sent from the contact page and the partners page.</p>
       <span class="card-go">Open</span>
     </a>
+    <a class="card" href="{{ route('admin.subscribers') }}">
+      <span class="card-count">{{ $subscribers }} signed up</span>
+      <strong>Subscribers</strong>
+      <p>Email addresses from the Stay Informed form on News.</p>
+      <span class="card-go">Open</span>
+    </a>
   </div>
 @endsection

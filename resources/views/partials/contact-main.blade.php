@@ -61,17 +61,17 @@
         <input type="hidden" name="source" value="contact">
         <input type="hidden" name="inquiry" id="inquiryField" value="{{ $cms['form']['types'][0]['title'] ?? 'General' }}">
         <div class="contact-form-wrap">
-          @if (session('sent'))
-            <p style="margin:0 0 16px;color:#d7ecda;font-weight:600">Thank you. Your message has been received.</p>
+          @if ($errors->any())
+            <p class="form-error">Please complete the highlighted fields and try again.</p>
           @endif
           <div class="form-row">
             <div class="form-field">
               <label>{{ $cms['form']['name_label'] }}</label>
-              <input type="text" name="name" placeholder="{{ $cms['form']['name_placeholder'] }}">
+              <input type="text" name="name" value="{{ old('name') }}" placeholder="{{ $cms['form']['name_placeholder'] }}" required>
             </div>
             <div class="form-field">
               <label>{{ $cms['form']['email_field'] }}</label>
-              <input type="email" name="email" placeholder="{{ $cms['form']['email_placeholder'] }}">
+              <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ $cms['form']['email_placeholder'] }}" required>
             </div>
           </div>
           <div class="form-row">
@@ -86,7 +86,7 @@
           </div>
           <div class="form-field">
             <label>{{ $cms['form']['message_label'] }}</label>
-            <textarea name="message" placeholder="{{ $cms['form']['message_placeholder'] }}"></textarea>
+            <textarea name="message" placeholder="{{ $cms['form']['message_placeholder'] }}" required>{{ old('message') }}</textarea>
           </div>
           <div class="form-submit-row">
             <button class="btn btn-orange" type="submit">{{ $cms['form']['button_label'] }} <span class="arw">→</span></button>
@@ -123,3 +123,10 @@
     </div>
   </div>
 </div>
+
+@include('partials.sent-modal', [
+  'kind' => 'contact',
+  'eyebrow' => 'Message sent',
+  'title' => 'Thank you',
+  'text' => 'Your message has been received. We will route it to the right team and reply promptly.',
+])

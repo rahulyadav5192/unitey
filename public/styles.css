@@ -733,6 +733,52 @@ header.solid .burger span,
   margin-top: 14px
 }
 
+.nl-error {
+  color: #ffb4a8;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.form-error {
+  color: #b42318;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.unitey-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(14, 19, 48, .62);
+}
+
+.unitey-modal-card {
+  width: min(440px, 100%);
+  background: #fff;
+  color: var(--ink);
+  padding: 32px 28px 28px;
+  border-radius: 2px;
+  box-shadow: 0 24px 60px rgba(8, 12, 28, .28);
+}
+
+.unitey-modal-card h2 {
+  font-size: clamp(28px, 4vw, 36px);
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  margin: 8px 0 12px;
+}
+
+.unitey-modal-card p:last-of-type {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
 
 /* ──────────────────────────────────────────────────────────────
    FORM FIELDS  (investments.html + contact.html)

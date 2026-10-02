@@ -286,6 +286,7 @@ small { font-weight: 500; color: var(--muted); line-height: 1.45; }
   text-transform: uppercase;
 }
 .save:hover { background: var(--orange-2); }
+a.save { text-decoration: none; display: inline-flex; align-items: center; }
 .ghost { text-decoration: none; display: inline-flex; align-items: center; }
 .savebar {
   position: sticky;
@@ -302,8 +303,11 @@ small { font-weight: 500; color: var(--muted); line-height: 1.45; }
   border-radius: 8px;
   padding: 16px 18px;
 }
-.letter header { display: flex; justify-content: space-between; gap: 12px; }
+.letter header { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.letter-tools { display: flex; align-items: center; gap: 12px; }
+.letter-tools form { margin: 0; }
 .letter time, .letter-meta { color: var(--muted); font-size: 13px; }
+.text-btn.danger { color: var(--danger); }
 .letter p { line-height: 1.55; }
 
 .gate {

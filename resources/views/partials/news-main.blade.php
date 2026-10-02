@@ -69,13 +69,25 @@
         <span class="eyebrow">{{ $cms['newsletter']['eyebrow'] }}</span>
         <p>{{ $cms['newsletter']['text'] }}</p>
       </div>
-      <div class="newsletter-right rv">
+      <form class="newsletter-right rv" method="POST" action="{{ route('subscribers.store') }}">
+        @csrf
+        <input type="hidden" name="source" value="news">
         <div class="nl-field">
-          <input type="email" placeholder="{{ $cms['newsletter']['placeholder'] }}">
+          <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ $cms['newsletter']['placeholder'] }}" required>
         </div>
-        <button class="nl-submit" type="button">{{ $cms['newsletter']['button'] }} →</button>
+        @error('email')
+          <p class="nl-error">Enter a valid email address.</p>
+        @enderror
+        <button class="nl-submit" type="submit">{{ $cms['newsletter']['button'] }} →</button>
         <p class="nl-note">{{ $cms['newsletter']['note'] }}</p>
-      </div>
+      </form>
     </div>
   </div>
 </section>
+
+@include('partials.sent-modal', [
+  'kind' => 'newsletter',
+  'eyebrow' => 'Stay informed',
+  'title' => 'You are subscribed',
+  'text' => 'Thank you. We will send the briefing to your inbox.',
+])
