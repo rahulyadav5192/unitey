@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Access\Permissions;
 use App\Cms\Catalog;
 use App\Cms\F;
 use App\Models\CmsBlock;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -12,9 +14,17 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        Permissions::sync();
+
+        $administrator = Role::query()->where('slug', 'administrator')->first();
+
         User::query()->updateOrCreate(
             ['email' => 'admin@unitey.com'],
-            ['name' => 'Unitey Admin', 'password' => 'Unitey#2026'],
+            [
+                'name' => 'Unitey Admin',
+                'password' => 'Unitey#2026',
+                'role_id' => $administrator?->id,
+            ],
         );
 
         foreach (Catalog::pages() as $page) {

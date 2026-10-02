@@ -13,19 +13,25 @@
 <body>
   <div class="shell">
     <aside class="side" id="side">
-      <a class="brand" href="{{ route('admin.home') }}">
+      <a class="brand" href="{{ \App\Access\Navigation::firstUrl() ?? route('admin.home') }}">
         <img src="{{ asset('uniteywhite1.png') }}" alt="Unitey">
         <span>Content</span>
       </a>
       <nav class="side-nav">
-        <a href="{{ route('admin.home') }}" @class(['active' => request()->routeIs('admin.home')])>Overview</a>
-        @foreach (\App\Cms\Catalog::publicPages() as $navPage)
-          <a href="{{ route('admin.edit', $navPage['slug']) }}" @class(['active' => request()->routeIs('admin.edit') && request()->route('page') === $navPage['slug']])>{{ $navPage['name'] }}</a>
+        @php $navGroup = null; @endphp
+        @foreach (\App\Access\Navigation::visible() as $item)
+          @if ($item['group'] !== $navGroup)
+            @php $navGroup = $item['group']; @endphp
+            @if ($navGroup !== 'General')
+              <span class="nav-label">{{ $navGroup }}</span>
+            @endif
+          @endif
+          <a href="{{ $item['url'] }}" @class(['active' => $item['active']])>{{ $item['label'] }}</a>
         @endforeach
-        <a href="{{ route('admin.messages') }}" @class(['active' => request()->routeIs('admin.messages')])>Messages</a>
-        <a href="{{ route('admin.subscribers') }}" @class(['active' => request()->routeIs('admin.subscribers')])>Subscribers</a>
       </nav>
       <div class="side-foot">
+        <p class="who">{{ auth()->user()->name }}</p>
+        <p class="who-role">{{ auth()->user()->role?->name }}</p>
         <a href="{{ url('/') }}" target="_blank" rel="noopener">View the site</a>
         <form method="POST" action="{{ route('admin.logout') }}">
           @csrf

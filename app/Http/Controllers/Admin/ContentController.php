@@ -6,7 +6,9 @@ use App\Cms\Catalog;
 use App\Http\Controllers\Controller;
 use App\Models\CmsBlock;
 use App\Models\Inquiry;
+use App\Models\Role;
 use App\Models\Subscriber;
+use App\Models\User;
 use App\Services\CmsStore;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,12 +20,19 @@ class ContentController extends Controller
 {
     public function __construct(private CmsStore $cms) {}
 
-    public function home(): View
+    public function home(Request $request): View
     {
+        $user = $request->user();
+
         return view('admin.home', [
-            'pages' => Catalog::publicPages(),
-            'messages' => Inquiry::query()->count(),
-            'subscribers' => Subscriber::query()->count(),
+            'pages' => array_values(array_filter(
+                Catalog::publicPages(),
+                fn (array $page) => $user->allows('page.'.$page['slug']),
+            )),
+            'messages' => $user->allows('messages') ? Inquiry::query()->count() : null,
+            'subscribers' => $user->allows('subscribers') ? Subscriber::query()->count() : null,
+            'users' => $user->allows('users') ? User::query()->count() : null,
+            'roles' => $user->allows('roles') ? Role::query()->count() : null,
         ]);
     }
 

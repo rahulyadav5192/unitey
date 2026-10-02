@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Access\Navigation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,12 +30,14 @@ class SessionController extends Controller
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()
                 ->withInput($request->only('email'))
-                ->withErrors(['email' => 'Those details do not match an admin account.']);
+                ->withErrors(['email' => 'Those details do not match an account.']);
         }
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.home'));
+        $landing = Navigation::firstUrl($request->user()) ?? route('admin.home');
+
+        return redirect()->intended($landing);
     }
 
     public function destroy(Request $request): RedirectResponse
